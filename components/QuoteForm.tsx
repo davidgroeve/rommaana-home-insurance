@@ -17,7 +17,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
     selectedOptions: [],
     startDate: new Date().toISOString().split('T')[0],
     durationYears: 1,
-    domesticWorkersCount: 1,
+    domesticWorkersCount: 0,
     optionalCoverageValues: {}
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -96,8 +96,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
         isValid = false;
       }
 
-      if (formData.domesticWorkersCount < 1) {
-        newErrors.domesticWorkersCount = 'Minimum 1 worker';
+      if (formData.domesticWorkersCount < 0) {
+        newErrors.domesticWorkersCount = 'Invalid number';
         isValid = false;
       }
     }
@@ -225,7 +225,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                 <input
                   type="number"
                   name="domesticWorkersCount"
-                  min={1}
+                  min={0}
                   value={formData.domesticWorkersCount}
                   onChange={handleInputChange}
                   className={`w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pomegranate-500 outline-none bg-white text-gray-900`}
@@ -294,7 +294,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                 </div>
                 <div>
                   <span className="text-gray-500 block">Domestic Workers</span>
-                  <span className="font-semibold text-gray-900">{formData.domesticWorkersCount}</span>
+                  <span className="font-semibold text-gray-900">{formData.domesticWorkersCount === 0 ? 'None' : formData.domesticWorkersCount}</span>
                 </div>
                 {formData.userType === UserType.OWNER && (
                   <div>

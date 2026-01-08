@@ -56,6 +56,7 @@ export const pdfService = {
         const overviewData = [
             ["Type", quoteRequest.userType === 'OWNER' ? 'Home Owner' : 'Tenant'],
             ["Duration", `${quoteRequest.durationYears} Year(s)`],
+            ["Domestic Workers", quoteRequest.domesticWorkersCount === 0 ? 'None' : quoteRequest.domesticWorkersCount.toString()],
             ["Scheme", quoteResult.schemeName],
             ["Start Date", quoteRequest.startDate]
         ];
