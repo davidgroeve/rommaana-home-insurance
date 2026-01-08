@@ -24,5 +24,20 @@ export const emailService = {
                 });
             }, 1500);
         });
+    },
+
+    /**
+     * Mocks sending a welcome email with login credentials.
+     */
+    sendWelcomeEmail: async (email: string, password: string, name: string): Promise<void> => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(`[EmailService MOCK] Sending Welcome Email to ${name} (${email})`);
+                console.log(`[EmailService MOCK] CONTENT: Welcome to Rommaana! Your account has been created.`);
+                console.log(`[EmailService MOCK] CREDENTIALS: ID: ${email}, Password: ${password}`);
+                console.log(`[EmailService MOCK] LOGIN URL: http://localhost:5173/login`);
+                resolve();
+            }, 1000);
+        });
     }
 };

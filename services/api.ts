@@ -11,6 +11,8 @@ import {
 } from '../types';
 import { SCHEMES, PRICING_RULES } from '../constants';
 import { supabase } from './supabaseClient';
+import { authService } from './authService';
+import { emailService } from './emailService';
 
 /**
  * ROMMAANA API CLIENT
@@ -80,7 +82,23 @@ export const rommaanaApi = {
      * Submit a formal quote request for policy issuance.
      */
     submit: async (payload: SubmitQuotePayload): Promise<void> => {
-      const { data: { user } } = await supabase.auth.getUser();
+      let { data: { user } } = await supabase.auth.getUser();
+
+      // If no user is logged in, auto-register
+      if (!user) {
+        console.log(`[API] No user session found. Auto-registering ${payload.customer.email}...`);
+        const { userId, password } = await authService.autoRegister(
+          `${payload.customer.firstName} ${payload.customer.lastName}`,
+          payload.customer.email
+        );
+
+        // Mock send welcome email
+        await emailService.sendWelcomeEmail(payload.customer.email, password, payload.customer.firstName);
+
+        // Re-fetch user or just use the ID
+        const { data: newUser } = await supabase.auth.getUser();
+        user = newUser.user;
+      }
 
       const { error } = await supabase
         .from('quotes')

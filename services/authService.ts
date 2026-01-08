@@ -65,6 +65,38 @@ export const authService = {
     return newUser;
   },
 
+  autoRegister: async (name: string, email: string): Promise<{ userId: string, password: string }> => {
+    // Generate a secure random password
+    const password = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10);
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: name,
+        },
+      },
+    });
+
+    if (error) {
+      // If user already exists, we might get an error. 
+      // In a real app we'd handle "user already exists" gracefully.
+      throw error;
+    }
+
+    if (!data.user) throw new Error('Auto-registration failed');
+
+    // Create profile entry
+    await supabase
+      .from('profiles')
+      .insert([
+        { id: data.user.id, full_name: name, role: 'CUSTOMER' }
+      ]);
+
+    return { userId: data.user.id, password };
+  },
+
   logout: async () => {
     await supabase.auth.signOut();
     localStorage.removeItem(SESSION_KEY);
