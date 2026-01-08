@@ -3,6 +3,32 @@ import { QuoteRequest, UserType, QuoteResult, OPTIONAL_COVERS, OptionalCoverageI
 import { rommaanaApi } from '../services/api'; // Updated import
 import { generateQuoteSummary } from '../services/geminiService';
 
+const InfoTooltip: React.FC<{ text: string }> = ({ text }) => {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div className="relative inline-block ml-1.5 group">
+      <button
+        type="button"
+        onMouseEnter={() => setVisible(true)}
+        onMouseLeave={() => setVisible(false)}
+        onClick={() => setVisible(!visible)}
+        className="text-gray-400 hover:text-pomegranate-600 transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+        </svg>
+      </button>
+      {visible && (
+        <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl animate-fadeIn pointer-events-none">
+          {text}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900" />
+        </div>
+      )}
+    </div>
+  );
+};
+
 interface QuoteFormProps {
   onQuoteGenerated: (result: QuoteResult, request: QuoteRequest, summary: string) => void;
 }
@@ -145,7 +171,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
         {step === 1 && (
           <div className="space-y-6 animate-fadeIn">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">I am a...</label>
+              <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                I am a...
+                <InfoTooltip text="Owner: You own the property. Tenant: You are renting the property." />
+              </label>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
@@ -168,7 +197,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 font-arabic">Policy Start Date</label>
+                <label className="flex items-center text-sm font-medium text-gray-700 mb-2 font-arabic">
+                  Policy Start Date
+                  <InfoTooltip text="The date your insurance coverage begins. Cannot be in the past." />
+                </label>
                 <input
                   type="date"
                   name="startDate"
@@ -178,7 +210,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Duration (Years)</label>
+                <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                  Duration (Years)
+                  <InfoTooltip text="Choose a multi-year policy to lock in current rates." />
+                </label>
                 <select
                   name="durationYears"
                   value={formData.durationYears}
@@ -194,7 +229,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
 
             {formData.userType === UserType.OWNER && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Building Value (SAR)</label>
+                <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                  Building Value (SAR)
+                  <InfoTooltip text="Estimated cost to rebuild the structure. Exclude land value. Example: 250 sqm * 2000 SAR/sqm = 500k SAR." />
+                </label>
                 <input
                   type="number"
                   name="buildingValue"
@@ -209,7 +247,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Contents Value (SAR)</label>
+                <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                  Contents Value (SAR)
+                  <InfoTooltip text="Total value of furniture, electronics, and belongings. Example: TV, sofa, appliances, clothes." />
+                </label>
                 <input
                   type="number"
                   name="contentsValue"
@@ -221,7 +262,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                 {errors.contentsValue && <p className="text-xs text-red-600 mt-1 font-medium">{errors.contentsValue}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Domestic Workers</label>
+                <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                  Domestic Workers
+                  <InfoTooltip text="Number of staff legally under your sponsorship for liability coverage (e.g., drivers, maids)." />
+                </label>
                 <input
                   type="number"
                   name="domesticWorkersCount"

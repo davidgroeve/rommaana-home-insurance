@@ -3,7 +3,6 @@ import confetti from 'canvas-confetti';
 import { Header } from './components/Header';
 import { QuoteForm } from './components/QuoteForm';
 import { QuoteResultCard } from './components/QuoteResultCard';
-import { ChatAssistant } from './components/ChatAssistant';
 import { AuthModal } from './components/AuthModal';
 import { RequestQuoteModal } from './components/RequestQuoteModal';
 import { SuccessModal } from './components/SuccessModal';
@@ -261,7 +260,6 @@ function App() {
 
       {renderContent()}
 
-      <ChatAssistant />
 
       <AuthModal
         isOpen={isAuthModalOpen}

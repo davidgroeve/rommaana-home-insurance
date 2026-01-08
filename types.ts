@@ -7,8 +7,7 @@ export const OPTIONAL_COVERS = {
   JEWELLERY: 'Jewellery & Valuables',
   PAINTINGS: 'Paintings & Curios',
   EMERGENCY: 'Emergency Purchase',
-  ALT_ACCOMM: 'Alternative Accommodation',
-  DOMESTIC_WORKERS: 'Domestic Workers'
+  ALT_ACCOMM: 'Alternative Accommodation'
 } as const;
 
 export type OptionalCoverageId = keyof typeof OPTIONAL_COVERS;
