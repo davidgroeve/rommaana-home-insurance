@@ -238,7 +238,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
         {step === 2 && (
           <div className="space-y-6 animate-fadeIn">
             <h3 className="text-lg font-bold text-gray-900">Optional Coverages</h3>
-            <p className="text-sm text-gray-500">Select additional options. Each adds 20% to base premium.</p>
+            <p className="text-sm text-gray-500">Select additional options to enhance your protection.</p>
 
             <div className="space-y-3">
               {Object.entries(OPTIONAL_COVERS).map(([key, label]) => {
@@ -252,10 +252,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                         </div>
                         <span className={`font-medium ${isSelected ? 'text-pomegranate-900' : 'text-gray-700'}`}>{label}</span>
                       </div>
-                      <span className="text-xs font-semibold bg-white border border-gray-200 px-2 py-1 rounded text-gray-500">+20%</span>
                     </div>
 
-                    {isSelected && (
+                    {isSelected && key === 'JEWELLERY' && (
                       <div className="mt-4 animate-slideDown">
                         <label className="block text-xs font-bold text-pomegranate-700 uppercase mb-1">Itemized Value (SAR)</label>
                         <input
@@ -315,7 +314,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                     {formData.selectedOptions.map(opt => (
                       <div key={opt} className="flex justify-between items-center text-xs">
                         <span className="bg-pomegranate-100 text-pomegranate-700 px-2 py-1 rounded font-medium">{OPTIONAL_COVERS[opt]}</span>
-                        <span className="text-gray-600">Value: SAR {(formData.optionalCoverageValues[opt] || 0).toLocaleString()}</span>
+                        {opt === 'JEWELLERY' && (
+                          <span className="text-gray-600">Value: SAR {(formData.optionalCoverageValues[opt] || 0).toLocaleString()}</span>
+                        )}
                       </div>
                     ))}
                   </div>
