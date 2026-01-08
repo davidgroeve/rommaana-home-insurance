@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { QuoteRequest, UserType, QuoteResult, OPTIONAL_COVERS, OptionalCoverageId } from '../types';
 import { rommaanaApi } from '../services/api'; // Updated import
-import { generateQuoteSummary } from '../services/geminiService';
 
 const InfoTooltip: React.FC<{ text: string }> = ({ text }) => {
   const [visible, setVisible] = useState(false);
@@ -30,7 +29,7 @@ const InfoTooltip: React.FC<{ text: string }> = ({ text }) => {
 };
 
 interface QuoteFormProps {
-  onQuoteGenerated: (result: QuoteResult, request: QuoteRequest, summary: string) => void;
+  onQuoteGenerated: (result: QuoteResult, request: QuoteRequest) => void;
 }
 
 export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
@@ -144,8 +143,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
     setLoading(true);
     try {
       const result = await rommaanaApi.pricing.calculate(formData);
-      const summary = await generateQuoteSummary(formData, result);
-      onQuoteGenerated(result, formData, summary);
+      onQuoteGenerated(result, formData);
     } catch (error: any) {
       console.error("Calculation failed", error);
       alert(error.message || "Could not calculate quote");

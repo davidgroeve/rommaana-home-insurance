@@ -4,14 +4,13 @@ import { QuoteResult, QuoteRequest, OPTIONAL_COVERS, UserType } from '../types';
 interface QuoteResultCardProps {
     result: QuoteResult;
     request: QuoteRequest;
-    summary: string;
     onReset: () => void;
     onRequestQuote: () => void;
     onViewDetailedCoverage: () => void;
     isProcessing: boolean;
 }
 
-export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, request, summary, onReset, onRequestQuote, onViewDetailedCoverage, isProcessing }) => {
+export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, request, onReset, onRequestQuote, onViewDetailedCoverage, isProcessing }) => {
     const [showDetails, setShowDetails] = useState(false);
 
     return (
@@ -33,8 +32,21 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                     </div>
                     <p className="text-xs text-pomegranate-300 mt-1">Inclusive of VAT</p>
 
-                    <div className="mt-6 bg-white/10 p-4 rounded-lg backdrop-blur-sm border border-white/10">
-                        <p className="text-sm italic text-pomegranate-50 leading-relaxed">"{summary}"</p>
+                    <div className="mt-8 grid grid-cols-2 gap-3">
+                        <div className="bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20">
+                            <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">Public Liability</p>
+                            <p className="text-sm font-bold text-white">SAR {result.details.publicLiability.toLocaleString()}</p>
+                        </div>
+                        <div className="bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20">
+                            <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">Contents Total</p>
+                            <p className="text-sm font-bold text-white">SAR {result.limits.contents.toLocaleString()}</p>
+                        </div>
+                        {request.userType === UserType.OWNER && (
+                            <div className="bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20 col-span-2">
+                                <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">Main Building Coverage</p>
+                                <p className="text-sm font-bold text-white">SAR {result.limits.building.toLocaleString()}</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

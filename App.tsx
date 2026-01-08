@@ -26,7 +26,6 @@ function App() {
   // Quote State
   const [quoteResult, setQuoteResult] = useState<QuoteResult | null>(null);
   const [quoteRequest, setQuoteRequest] = useState<QuoteRequest | null>(null);
-  const [aiSummary, setAiSummary] = useState<string>("");
   const [isSubmittingQuote, setIsSubmittingQuote] = useState(false);
 
   // Initialization
@@ -68,16 +67,14 @@ function App() {
     handleResetQuote();
   };
 
-  const handleQuoteGenerated = (result: QuoteResult, request: QuoteRequest, summary: string) => {
+  const handleQuoteGenerated = (result: QuoteResult, request: QuoteRequest) => {
     setQuoteResult(result);
     setQuoteRequest(request);
-    setAiSummary(summary);
   };
 
   const handleResetQuote = () => {
     setQuoteResult(null);
     setQuoteRequest(null);
-    setAiSummary("");
   };
 
   const handleRequestQuoteClick = () => {
@@ -234,7 +231,6 @@ function App() {
               <QuoteResultCard
                 result={quoteResult}
                 request={quoteRequest!}
-                summary={aiSummary}
                 onReset={handleResetQuote}
                 onRequestQuote={handleRequestQuoteClick}
                 onViewDetailedCoverage={() => setIsCoverageModalOpen(true)}
