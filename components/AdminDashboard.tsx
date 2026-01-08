@@ -42,6 +42,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
     setEmailStatus(null);
     try {
       const result = await emailService.sendQuoteDocuments(req);
+      if (result.success) {
+        // Update status in backend
+        await rommaanaApi.quotes.updateStatus(req.id, 'CONTACTED');
+        // Update local state
+        setRequests(prev => prev.map(r => r.id === req.id ? { ...r, status: 'CONTACTED' } : r));
+      }
       setEmailStatus({ id: req.id, success: result.success, message: result.message });
       setTimeout(() => setEmailStatus(null), 5000);
     } catch (err) {
@@ -67,8 +73,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         <button
           onClick={() => setActiveTab('ISSUANCE')}
           className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'ISSUANCE'
-              ? 'bg-white text-pomegranate-600 shadow-md'
-              : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+            ? 'bg-white text-pomegranate-600 shadow-md'
+            : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
             }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
@@ -79,8 +85,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         <button
           onClick={() => setActiveTab('PARTNERS')}
           className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'PARTNERS'
-              ? 'bg-white text-pomegranate-600 shadow-md'
-              : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+            ? 'bg-white text-pomegranate-600 shadow-md'
+            : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
             }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
@@ -91,8 +97,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         <button
           onClick={() => setActiveTab('DOCUMENTATION')}
           className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'DOCUMENTATION'
-              ? 'bg-white text-pomegranate-600 shadow-md'
-              : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+            ? 'bg-white text-pomegranate-600 shadow-md'
+            : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
             }`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
@@ -183,12 +189,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                                 <button
                                   onClick={() => handleSendEmail(req)}
                                   disabled={sendingEmail === req.id}
-                                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all border shadow-sm ${sendingEmail === req.id
+                                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all border shadow-sm group min-w-[125px] justify-center ${sendingEmail === req.id
                                       ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
-                                      : 'bg-pomegranate-600 hover:bg-pomegranate-700 text-white border-pomegranate-600 active:scale-95'
+                                      : req.status === 'CONTACTED'
+                                        ? 'bg-gray-400 text-white border-gray-400 hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95'
+                                        : 'bg-pomegranate-600 hover:bg-pomegranate-700 text-white border-pomegranate-600 active:scale-95'
                                     }`}
                                 >
-                                  {sendingEmail === req.id ? 'Sending...' : 'Send Documents'}
+                                  {sendingEmail === req.id ? (
+                                    'Sending...'
+                                  ) : req.status === 'CONTACTED' ? (
+                                    <>
+                                      <span className="group-hover:hidden">Documents Sent</span>
+                                      <span className="hidden group-hover:inline">ReSend Documents</span>
+                                    </>
+                                  ) : (
+                                    'Send Documents'
+                                  )}
                                 </button>
                               </div>
                               {emailStatus && emailStatus.id === req.id && (

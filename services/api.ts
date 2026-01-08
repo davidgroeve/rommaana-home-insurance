@@ -114,6 +114,18 @@ export const rommaanaApi = {
         status: q.status,
         submittedAt: q.submitted_at
       }));
+    },
+
+    /**
+     * Admin: Update the status of a quote request.
+     */
+    updateStatus: async (id: string, status: FormalQuoteRequest['status']): Promise<void> => {
+      const { error } = await supabase
+        .from('quotes')
+        .update({ status })
+        .eq('id', id);
+
+      if (error) throw error;
     }
   },
 
