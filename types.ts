@@ -111,6 +111,7 @@ export interface FormalQuoteRequest {
   quoteResult: QuoteResult;
   status: 'PENDING' | 'CONTACTED' | 'CLOSED';
   submittedAt: string;
+  contactedAt?: string;
 }
 
 // --- API INFRASTRUCTURE TYPES ---

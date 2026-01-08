@@ -46,7 +46,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         // Update status in backend
         await rommaanaApi.quotes.updateStatus(req.id, 'CONTACTED');
         // Update local state
-        setRequests(prev => prev.map(r => r.id === req.id ? { ...r, status: 'CONTACTED' } : r));
+        const contactedAt = new Date().toISOString();
+        setRequests(prev => prev.map(r => r.id === req.id ? { ...r, status: 'CONTACTED', contactedAt } : r));
       }
       setEmailStatus({ id: req.id, success: result.success, message: result.message });
       setTimeout(() => setEmailStatus(null), 5000);
@@ -145,6 +146,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                         <th className="px-6 py-4">Customer</th>
                         <th className="px-6 py-4">Quote Details</th>
                         <th className="px-6 py-4">Premium</th>
+                        <th className="px-6 py-4">Sent At</th>
                         <th className="px-6 py-4 text-center">Documentation Actions</th>
                       </tr>
                     </thead>
@@ -164,6 +166,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
                             SAR {req.quoteResult.totalPremium.toLocaleString()}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {req.contactedAt ? (
+                              <>
+                                <div className="text-xs font-bold text-green-600">{new Date(req.contactedAt).toLocaleDateString()}</div>
+                                <div className="text-[10px] text-green-500">{new Date(req.contactedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                              </>
+                            ) : (
+                              <span className="text-xs text-gray-400 italic">Not sent</span>
+                            )}
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex flex-col gap-2">
@@ -190,10 +202,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                                   onClick={() => handleSendEmail(req)}
                                   disabled={sendingEmail === req.id}
                                   className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all border shadow-sm group min-w-[125px] justify-center ${sendingEmail === req.id
-                                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
-                                      : req.status === 'CONTACTED'
-                                        ? 'bg-gray-400 text-white border-gray-400 hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95'
-                                        : 'bg-pomegranate-600 hover:bg-pomegranate-700 text-white border-pomegranate-600 active:scale-95'
+                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
+                                    : req.status === 'CONTACTED'
+                                      ? 'bg-gray-400 text-white border-gray-400 hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95'
+                                      : 'bg-pomegranate-600 hover:bg-pomegranate-700 text-white border-pomegranate-600 active:scale-95'
                                     }`}
                                 >
                                   {sendingEmail === req.id ? (

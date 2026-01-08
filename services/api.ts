@@ -112,7 +112,8 @@ export const rommaanaApi = {
         quoteRequest: q.quote_request,
         quoteResult: q.quote_result,
         status: q.status,
-        submittedAt: q.submitted_at
+        submittedAt: q.submitted_at,
+        contactedAt: q.contacted_at
       }));
     },
 
@@ -120,9 +121,14 @@ export const rommaanaApi = {
      * Admin: Update the status of a quote request.
      */
     updateStatus: async (id: string, status: FormalQuoteRequest['status']): Promise<void> => {
+      const updateData: any = { status };
+      if (status === 'CONTACTED') {
+        updateData.contacted_at = new Date().toISOString();
+      }
+
       const { error } = await supabase
         .from('quotes')
-        .update({ status })
+        .update(updateData)
         .eq('id', id);
 
       if (error) throw error;
