@@ -178,7 +178,7 @@ function App() {
                     </div>
                     <div>
                       <p className="text-gray-800 font-medium italic text-lg leading-relaxed">
-                        "Rommaana works with Al Etihad to provide the best Home Insurance using cutting edge technology."
+                        "{t('hero.etihadDesc')}"
                       </p>
                     </div>
                   </div>
