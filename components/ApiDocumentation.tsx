@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export const ApiDocumentation: React.FC = () => {
+    const { t } = useLanguage();
     const [activeLang, setActiveLang] = useState<'js' | 'curl' | 'python'>('js');
 
     const copyToClipboard = (text: string) => {
@@ -61,9 +63,9 @@ print(response.json())`
         <div className="space-y-8 animate-fadeIn pb-12">
             {/* Introduction */}
             <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                <h2 className="text-xl font-bold text-gray-900 mb-2">B2B Integration Guide</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-2">{t('apiDocs.title')}</h2>
                 <p className="text-gray-600 leading-relaxed">
-                    Rommaana provides a robust API for partners to integrate our insurance pricing and quote submission directly into their own platforms (Mobile Apps, ERPs, or Websites).
+                    {t('apiDocs.description')}
                 </p>
             </div>
 
@@ -74,9 +76,9 @@ print(response.json())`
                         <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded">POST</span>
                         <code className="text-sm font-bold text-gray-800">/v1/calculate</code>
                     </div>
-                    <p className="text-xs text-gray-500 mb-4">Perform real-time premium calculation based on Rommaana's proprietary pricing engine.</p>
+                    <p className="text-xs text-gray-500 mb-4">{t('apiDocs.calculate.desc')}</p>
                     <div className="space-y-2">
-                        <h4 className="text-xs font-bold uppercase text-gray-400 tracking-wider">Required Headers</h4>
+                        <h4 className="text-xs font-bold uppercase text-gray-400 tracking-wider">{t('apiDocs.calculate.headers')}</h4>
                         <ul className="text-xs space-y-1 font-mono">
                             <li className="text-gray-700"><span className="text-pomegranate-600">x-api-key</span>: Your Partner Key</li>
                             <li className="text-gray-700"><span className="text-pomegranate-600">Content-Type</span>: application/json</li>
@@ -89,10 +91,10 @@ print(response.json())`
                         <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded">POST</span>
                         <code className="text-sm font-bold text-gray-800">/v1/submit-quote</code>
                     </div>
-                    <p className="text-xs text-gray-500 mb-4">Send a formal issuance request to Al Etihad via Rommaana's hub.</p>
+                    <p className="text-xs text-gray-500 mb-4">{t('apiDocs.submit.desc')}</p>
                     <div className="space-y-2">
-                        <h4 className="text-xs font-bold uppercase text-gray-400 tracking-wider">Required Data</h4>
-                        <p className="text-[10px] text-gray-400 italic">Includes customer details (ID, National Address) and calculated quote reference.</p>
+                        <h4 className="text-xs font-bold uppercase text-gray-400 tracking-wider">{t('apiDocs.submit.data')}</h4>
+                        <p className="text-[10px] text-gray-400 italic">{t('apiDocs.submit.dataDesc')}</p>
                     </div>
                 </div>
             </div>
@@ -119,7 +121,7 @@ print(response.json())`
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
                         </svg>
-                        Copy Snippet
+                        {t('apiDocs.copySnippet')}
                     </button>
                 </div>
                 <div className="p-6">
@@ -134,9 +136,9 @@ print(response.json())`
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-20 -mt-20"></div>
 
                 <div className="relative z-10 max-w-2xl">
-                    <h3 className="text-xl font-bold mb-4">Embedded Quote Widget</h3>
+                    <h3 className="text-xl font-bold mb-4">{t('apiDocs.widget.title')}</h3>
                     <p className="text-pomegranate-100 text-sm mb-6 leading-relaxed">
-                        Want to show our quote form on your website? Paste this code snippet into your HTML to render a fully functional Rommaana Home Insurance component.
+                        {t('apiDocs.widget.description')}
                     </p>
 
                     <div className="bg-black/30 p-4 rounded-lg font-mono text-xs border border-white/10 relative group">

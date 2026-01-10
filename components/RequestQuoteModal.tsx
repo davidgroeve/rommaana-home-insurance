@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CustomerDetails } from '../types';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface RequestQuoteModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface RequestQuoteModalProps {
 }
 
 export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, onClose, onSubmit, isSubmitting }) => {
+  const { t } = useLanguage();
   const [details, setDetails] = useState<CustomerDetails>({
     firstName: '',
     lastName: '',
@@ -41,26 +43,26 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
         <div className="bg-pomegranate-700 p-6 text-white text-center relative shrink-0">
-          <button onClick={onClose} className="absolute top-4 right-4 text-pomegranate-200 hover:text-white">
+          <button onClick={onClose} className="absolute top-4 end-4 text-pomegranate-200 hover:text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
           </button>
-          <h2 className="text-2xl font-bold">Request Formal Policy</h2>
-          <p className="text-pomegranate-200 text-sm mt-1">Please provide details for policy issuance.</p>
+          <h2 className="text-2xl font-bold">{t('modals.requestTitle')}</h2>
+          <p className="text-pomegranate-200 text-sm mt-1">{t('modals.requestSubtitle')}</p>
         </div>
 
         <div className="overflow-y-auto p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg mb-4">
               <p className="text-xs text-blue-700">
-                <span className="font-bold">Note:</span> These details are required by Saudi Insurance Regulation to issue your policy.
+                <span className="font-bold">{t('modals.note')}:</span> {t('modals.noteDesc')}
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">First Name (English)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modals.firstName')}</label>
                 <input
                   type="text"
                   name="firstName"
@@ -71,7 +73,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Last Name (English)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modals.lastName')}</label>
                 <input
                   type="text"
                   name="lastName"
@@ -85,7 +87,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">National ID / Iqama (10 Digits)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modals.nationalId')}</label>
                 <input
                   type="text"
                   name="nationalId"
@@ -99,7 +101,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modals.dob')}</label>
                 <input
                   type="date"
                   name="dob"
@@ -113,7 +115,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modals.mobile')}</label>
                 <input
                   type="tel"
                   name="phone"
@@ -126,7 +128,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modals.email')}</label>
                 <input
                   type="email"
                   name="email"
@@ -139,41 +141,41 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
               </div>
             </div>
 
-            <h4 className="font-bold text-gray-900 pt-2 border-t border-gray-100 italic text-sm">Full National Address</h4>
+            <h4 className="font-bold text-gray-900 pt-2 border-t border-gray-100 italic text-sm">{t('modals.addressTitle')}</h4>
 
             <div className="grid grid-cols-3 gap-3">
               <div className="col-span-2">
-                <label className="block text-[10px] font-bold text-gray-500 uppercase">Street Address</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase">{t('modals.street')}</label>
                 <input type="text" name="streetAddress" required value={details.streetAddress} onChange={handleInputChange} className="w-full border-b border-gray-300 py-1 text-sm outline-none focus:border-pomegranate-500" />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-gray-500 uppercase">Number</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase">{t('modals.number')}</label>
                 <input type="text" name="streetNumber" required value={details.streetNumber} onChange={handleInputChange} className="w-full border-b border-gray-300 py-1 text-sm outline-none focus:border-pomegranate-500" />
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-[10px] font-bold text-gray-500 uppercase">Floor</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase">{t('modals.floor')}</label>
                 <input type="text" name="floor" required value={details.floor} onChange={handleInputChange} className="w-full border-b border-gray-300 py-1 text-sm outline-none focus:border-pomegranate-500" />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-gray-500 uppercase">Apartment</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase">{t('modals.apt')}</label>
                 <input type="text" name="apartment" required value={details.apartment} onChange={handleInputChange} className="w-full border-b border-gray-300 py-1 text-sm outline-none focus:border-pomegranate-500" />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-gray-500 uppercase">Postal Code</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase">{t('modals.zip')}</label>
                 <input type="text" name="postalCode" required value={details.postalCode} onChange={handleInputChange} className="w-full border-b border-gray-300 py-1 text-sm outline-none focus:border-pomegranate-500" />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-[10px] font-bold text-gray-500 uppercase">Neighborhood</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase">{t('modals.neighbor')}</label>
                 <input type="text" name="neighborhood" required value={details.neighborhood} onChange={handleInputChange} className="w-full border-b border-gray-300 py-1 text-sm outline-none focus:border-pomegranate-500" />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-gray-500 uppercase">City</label>
+                <label className="block text-[10px] font-bold text-gray-500 uppercase">{t('modals.city')}</label>
                 <input type="text" name="city" required value={details.city} onChange={handleInputChange} className="w-full border-b border-gray-300 py-1 text-sm outline-none focus:border-pomegranate-500" />
               </div>
             </div>
@@ -183,7 +185,7 @@ export const RequestQuoteModal: React.FC<RequestQuoteModalProps> = ({ isOpen, on
               disabled={isSubmitting}
               className="w-full bg-gold-500 hover:bg-gold-600 text-white font-bold py-3 rounded-lg shadow-md transition-colors flex justify-center items-center mt-6"
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Request'}
+              {isSubmitting ? t('modals.submitting') : t('modals.submit')}
             </button>
           </form>
         </div>

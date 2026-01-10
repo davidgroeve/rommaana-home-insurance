@@ -2,6 +2,11 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { FormalQuoteRequest, OPTIONAL_COVERS } from "../types";
 
+// Placeholder for Arabic Font (Amiri-Regular or Cairo-Regular).
+// You must replace this empty string with the actual Base64 encoded TTF file content.
+// Example: "AAEAAAASAQAABAAgDR..."
+const ARABIC_FONT_BASE64 = "";
+
 export const pdfService = {
     /**
      * Generates the PDF designed for the Final Customer.
@@ -9,6 +14,14 @@ export const pdfService = {
      */
     generateCustomerPdf: (req: FormalQuoteRequest) => {
         const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+        // Register Arabic Font if available
+        if (ARABIC_FONT_BASE64) {
+            doc.addFileToVFS("Amiri-Regular.ttf", ARABIC_FONT_BASE64);
+            doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+            doc.setFont("Amiri");
+        }
+
         const { customer, quoteRequest, quoteResult, submittedAt } = req;
 
         // 1. Header (Pomegranate Aesthetic)
@@ -114,6 +127,14 @@ export const pdfService = {
      */
     generateIssuancePdf: (req: FormalQuoteRequest) => {
         const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+        // Register Arabic Font if available
+        if (ARABIC_FONT_BASE64) {
+            doc.addFileToVFS("Amiri-Regular.ttf", ARABIC_FONT_BASE64);
+            doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+            doc.setFont("Amiri");
+        }
+
         const { customer, quoteRequest, quoteResult } = req;
 
         // 1. Technical Header

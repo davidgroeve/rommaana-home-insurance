@@ -1,11 +1,14 @@
 import React from 'react';
 
+import { useLanguage } from '../contexts/LanguageContext';
+
 interface SuccessModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
 export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) => {
+    const { t } = useLanguage();
     if (!isOpen) return null;
 
     return (
@@ -16,17 +19,17 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) =
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                 </div>
-                
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Congratulations!</h2>
+
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('modals.congrats')}</h2>
                 <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                    We will contact you very soon with the best option for your Home.
+                    {t('modals.successMsg')}
                 </p>
-                
-                <button 
+
+                <button
                     onClick={onClose}
                     className="w-full bg-gold-500 hover:bg-gold-600 text-white font-bold py-3 rounded-xl shadow-md transition-all hover:shadow-lg transform active:scale-95"
                 >
-                    Done
+                    {t('modals.done')}
                 </button>
             </div>
         </div>

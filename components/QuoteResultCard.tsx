@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { QuoteResult, QuoteRequest, OPTIONAL_COVERS, UserType } from '../types';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface QuoteResultCardProps {
     result: QuoteResult;
@@ -11,18 +12,19 @@ interface QuoteResultCardProps {
 }
 
 export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, request, onReset, onRequestQuote, onViewDetailedCoverage, isProcessing }) => {
+    const { t } = useLanguage();
     const [showDetails, setShowDetails] = useState(false);
 
     return (
         <div className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden animate-slideUp">
             <div className="bg-pomegranate-900 p-8 text-white relative overflow-hidden">
                 {/* Abstract Pattern background */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-20 -mt-20"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gold-500 opacity-10 rounded-full -ml-10 -mb-10"></div>
+                <div className="absolute top-0 end-0 w-64 h-64 bg-white opacity-5 rounded-full -me-20 -mt-20"></div>
+                <div className="absolute bottom-0 start-0 w-32 h-32 bg-gold-500 opacity-10 rounded-full -ms-10 -mb-10"></div>
 
                 <div className="relative z-10">
                     <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-sm font-medium text-pomegranate-200 uppercase tracking-wider">Total Annual Premium</h3>
+                        <h3 className="text-sm font-medium text-pomegranate-200 uppercase tracking-wider">{t('results.totalPremium')}</h3>
                         <span className="bg-gold-500 text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">{result.schemeName}</span>
                     </div>
 
@@ -54,10 +56,10 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
             <div className="p-8">
                 <div className="flex justify-between items-center mb-6 pb-6 border-b border-gray-100">
                     <div>
-                        <p className="text-xs text-gray-400 uppercase font-semibold">Reference ID</p>
+                        <p className="text-xs text-gray-400 uppercase font-semibold">{t('results.referenceId')}</p>
                         <p className="text-gray-800 font-mono">{result.referenceId}</p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-end">
                         <p className="text-xs text-gray-400 uppercase font-semibold">Coverage Package</p>
                         <p className="text-gray-800 font-medium">
                             {result.schemeName}
@@ -94,40 +96,40 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                         ) : (
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
                         )}
-                        {showDetails ? "Hide Full Coverage Details" : "View Full Coverage Details"}
+                        {showDetails ? t('common.close') : t('results.viewCoverage')}
                     </button>
 
                     {showDetails && (
                         <div className="mt-4 border rounded-lg overflow-hidden animate-fadeIn text-sm">
-                            <table className="w-full text-left">
+                            <table className="w-full text-start">
                                 <thead className="bg-gray-100 text-gray-600 text-xs uppercase">
                                     <tr>
                                         <th className="px-4 py-2 font-semibold">Cover Category</th>
-                                        <th className="px-4 py-2 font-semibold text-right">Limit (SAR)</th>
+                                        <th className="px-4 py-2 font-semibold text-end">Limit (SAR)</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-100 text-gray-700">
                                     {request.userType === UserType.OWNER && (
                                         <>
-                                            <tr><td className="px-4 py-2">Building Coverage</td><td className="px-4 py-2 text-right font-medium">{result.limits.building.toLocaleString()}</td></tr>
-                                            <tr><td className="px-4 py-2 pl-8 text-gray-500">Building Rent</td><td className="px-4 py-2 text-right text-gray-500">{result.details.buildingRent.toLocaleString()}</td></tr>
+                                            <tr><td className="px-4 py-2">Building Coverage</td><td className="px-4 py-2 text-end font-medium">{result.limits.building.toLocaleString()}</td></tr>
+                                            <tr><td className="px-4 py-2 ps-8 text-gray-500">Building Rent</td><td className="px-4 py-2 text-end text-gray-500">{result.details.buildingRent.toLocaleString()}</td></tr>
                                         </>
                                     )}
-                                    <tr><td className="px-4 py-2 bg-gray-50 font-medium">Contents Total</td><td className="px-4 py-2 bg-gray-50 text-right font-bold">{result.limits.contents.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 pl-8 text-gray-500">Furniture, Fixtures</td><td className="px-4 py-2 text-right text-gray-500">{result.details.furniture.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 pl-8 text-gray-500">Clothing</td><td className="px-4 py-2 text-right text-gray-500">{result.details.clothing.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 pl-8 text-gray-500">Appliances</td><td className="px-4 py-2 text-right text-gray-500">{result.details.appliances.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 pl-8 text-gray-500">TV / Home Theatre</td><td className="px-4 py-2 text-right text-gray-500">{result.details.tvAudio.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 pl-8 text-gray-500">AC / Electronics</td><td className="px-4 py-2 text-right text-gray-500">{result.details.acElectronics.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 pl-8 text-gray-500">Kitchen Crockery</td><td className="px-4 py-2 text-right text-gray-500">{result.details.kitchen.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 pl-8 text-gray-500">Carpets</td><td className="px-4 py-2 text-right text-gray-500">{result.details.carpets.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 bg-gray-50 font-medium">Contents Total</td><td className="px-4 py-2 bg-gray-50 text-end font-bold">{result.limits.contents.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Furniture, Fixtures</td><td className="px-4 py-2 text-end text-gray-500">{result.details.furniture.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Clothing</td><td className="px-4 py-2 text-end text-gray-500">{result.details.clothing.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Appliances</td><td className="px-4 py-2 text-end text-gray-500">{result.details.appliances.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">TV / Home Theatre</td><td className="px-4 py-2 text-end text-gray-500">{result.details.tvAudio.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">AC / Electronics</td><td className="px-4 py-2 text-end text-gray-500">{result.details.acElectronics.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Kitchen Crockery</td><td className="px-4 py-2 text-end text-gray-500">{result.details.kitchen.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Carpets</td><td className="px-4 py-2 text-end text-gray-500">{result.details.carpets.toLocaleString()}</td></tr>
 
                                     <tr><td className="px-4 py-2 bg-gray-50 font-medium">Liability & Others</td><td className="px-4 py-2 bg-gray-50"></td></tr>
-                                    <tr><td className="px-4 py-2">Public Liability</td><td className="px-4 py-2 text-right font-medium">{result.details.publicLiability.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2">Domestic Staff Liability</td><td className="px-4 py-2 text-right">{result.details.domesticStaff.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2">Personal Accident (Owner/Spouse)</td><td className="px-4 py-2 text-right">{result.details.paOwner.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2">Burglary Limit</td><td className="px-4 py-2 text-right">{result.details.burglary.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 text-red-500">Excess (Deductible)</td><td className="px-4 py-2 text-right text-red-500">-{result.details.excess.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2">Public Liability</td><td className="px-4 py-2 text-end font-medium">{result.details.publicLiability.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2">Domestic Staff Liability</td><td className="px-4 py-2 text-end">{result.details.domesticStaff.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2">Personal Accident (Owner/Spouse)</td><td className="px-4 py-2 text-end">{result.details.paOwner.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2">Burglary Limit</td><td className="px-4 py-2 text-end">{result.details.burglary.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 text-red-500">Excess (Deductible)</td><td className="px-4 py-2 text-end text-red-500">-{result.details.excess.toLocaleString()}</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -137,19 +139,19 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                 <h4 className="font-semibold text-gray-900 mb-4">Pricing Breakdown</h4>
                 <ul className="space-y-3 text-sm text-gray-600 mb-8">
                     <li className="flex justify-between">
-                        <span>Base Premium ({result.schemeName})</span>
-                        <span>SAR {result.breakdown.basePremium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                        <span>{t('results.basePremium')} ({result.schemeName})</span>
+                        <span>{t('common.sar')} {result.breakdown.basePremium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                     </li>
                     {result.breakdown.optionsCount > 0 && (
                         <li className="flex justify-between text-pomegranate-700">
-                            <span>Optional Add-ons ({result.breakdown.optionsCount})</span>
-                            <span>+ SAR {result.breakdown.optionsCost.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                            <span>{t('results.optionsCost')} ({result.breakdown.optionsCount})</span>
+                            <span>+ {t('common.sar')} {result.breakdown.optionsCost.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                         </li>
                     )}
                     {result.breakdown.domesticWorkerSurcharge > 0 && (
                         <li className="flex justify-between text-gray-700">
-                            <span>Domestic Worker Surcharge</span>
-                            <span>+ SAR {result.breakdown.domesticWorkerSurcharge.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                            <span>{t('results.workersCost')}</span>
+                            <span>+ {t('common.sar')} {result.breakdown.domesticWorkerSurcharge.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                         </li>
                     )}
                     {result.breakdown.durationMultiplier > 1 && (
@@ -192,7 +194,7 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                                 Processing...
                             </>
                         ) : (
-                            'Request Formal Quote'
+                            t('results.requestIssuance')
                         )}
                     </button>
 
@@ -204,7 +206,7 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                         </svg>
-                        Full Coverage Details
+                        {t('results.viewCoverage')}
                     </button>
 
                     <button
@@ -212,7 +214,7 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                         disabled={isProcessing}
                         className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 rounded-lg transition-colors"
                     >
-                        Recalculate
+                        {t('results.reset')}
                     </button>
                 </div>
             </div>

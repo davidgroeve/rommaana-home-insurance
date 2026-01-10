@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { QuoteRequest, UserType, QuoteResult, OPTIONAL_COVERS, OptionalCoverageId } from '../types';
 import { rommaanaApi } from '../services/api'; // Updated import
+import { useLanguage } from '../contexts/LanguageContext';
 
 const InfoTooltip: React.FC<{ text: string }> = ({ text }) => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="relative inline-block ml-1.5 group">
+    <div className="relative inline-block ms-1.5 group">
       <button
         type="button"
         onMouseEnter={() => setVisible(true)}
@@ -33,6 +34,7 @@ interface QuoteFormProps {
 }
 
 export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<QuoteRequest>({
@@ -155,8 +157,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
   return (
     <div className="bg-white rounded-xl shadow-xl overflow-hidden max-w-2xl mx-auto border border-gray-100">
       <div className="bg-gradient-to-r from-pomegranate-700 to-pomegranate-600 px-8 py-6 text-white">
-        <h2 className="text-2xl font-bold">Get Your Instant Quote</h2>
-        <p className="text-pomegranate-100 text-sm mt-1">Select your coverage needs below.</p>
+        <h2 className="text-2xl font-bold">{t('form.title')}</h2>
+        <p className="text-pomegranate-100 text-sm mt-1">{t('hero.subtitle')}</p>
 
         <div className="flex items-center mt-6 space-x-2">
           {[1, 2, 3].map(i => (
@@ -170,8 +172,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
           <div className="space-y-6 animate-fadeIn">
             <div>
               <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                I am a...
-                <InfoTooltip text="Owner: You own the property. Tenant: You are renting the property." />
+                {t('form.userType')}
+                <InfoTooltip text={t('form.userType')} />
               </label>
               <div className="grid grid-cols-2 gap-4">
                 <button
@@ -180,7 +182,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                   className={`p-4 rounded-xl border-2 text-center transition-all ${formData.userType === UserType.OWNER ? 'border-pomegranate-600 bg-pomegranate-50 text-pomegranate-700 font-semibold' : 'border-gray-200 hover:border-pomegranate-200 text-gray-600'}`}
                 >
                   <div className="text-2xl mb-1">🏠</div>
-                  Home Owner
+                  {t('form.owner')}
                 </button>
                 <button
                   type="button"
@@ -188,7 +190,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                   className={`p-4 rounded-xl border-2 text-center transition-all ${formData.userType === UserType.TENANT ? 'border-pomegranate-600 bg-pomegranate-50 text-pomegranate-700 font-semibold' : 'border-gray-200 hover:border-pomegranate-200 text-gray-600'}`}
                 >
                   <div className="text-2xl mb-1">🔑</div>
-                  Tenant
+                  {t('form.tenant')}
                 </button>
               </div>
             </div>
@@ -196,8 +198,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2 font-arabic">
-                  Policy Start Date
-                  <InfoTooltip text="The date your insurance coverage begins. Cannot be in the past." />
+                  {t('form.startDate')}
+                  <InfoTooltip text={t('form.startDate')} />
                 </label>
                 <input
                   type="date"
@@ -209,8 +211,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
               </div>
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  Duration (Years)
-                  <InfoTooltip text="Choose a multi-year policy to lock in current rates." />
+                  {t('form.duration')}
+                  <InfoTooltip text={t('form.duration')} />
                 </label>
                 <select
                   name="durationYears"
@@ -218,9 +220,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                   onChange={handleInputChange}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pomegranate-500 outline-none bg-white text-gray-900"
                 >
-                  <option value={1}>1 Year</option>
-                  <option value={2}>2 Years</option>
-                  <option value={3}>3 Years</option>
+                  <option value={1}>1 {t('common.year')}</option>
+                  <option value={2}>2 {t('common.years')}</option>
+                  <option value={3}>3 {t('common.years')}</option>
                 </select>
               </div>
             </div>
@@ -228,8 +230,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
             {formData.userType === UserType.OWNER && (
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  Building Value (SAR)
-                  <InfoTooltip text="Estimated cost to rebuild the structure. Exclude land value. Example: 250 sqm * 2000 SAR/sqm = 500k SAR." />
+                  {t('form.buildingValue')}
+                  <InfoTooltip text={t('form.buildingValueHint')} />
                 </label>
                 <input
                   type="number"
@@ -246,8 +248,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  Contents Value (SAR)
-                  <InfoTooltip text="Total value of furniture, electronics, and belongings. Example: TV, sofa, appliances, clothes." />
+                  {t('form.contentsValue')}
+                  <InfoTooltip text={t('form.contentsValueHint')} />
                 </label>
                 <input
                   type="number"
@@ -261,8 +263,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
               </div>
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  Domestic Workers
-                  <InfoTooltip text="Number of staff legally under your sponsorship for liability coverage (e.g., drivers, maids)." />
+                  {t('form.domesticWorkers')}
+                  <InfoTooltip text={t('form.domesticWorkersHint')} />
                 </label>
                 <input
                   type="number"
@@ -279,8 +281,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
 
         {step === 2 && (
           <div className="space-y-6 animate-fadeIn">
-            <h3 className="text-lg font-bold text-gray-900">Optional Coverages</h3>
-            <p className="text-sm text-gray-500">Select additional options to enhance your protection.</p>
+            <h3 className="text-lg font-bold text-gray-900">{t('options.title')}</h3>
+            <p className="text-sm text-gray-500">{t('hero.subtitle')}</p>
 
             <div className="space-y-3">
               {Object.entries(OPTIONAL_COVERS).map(([key, label]) => {
@@ -292,7 +294,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                         <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected ? 'border-pomegranate-600 bg-pomegranate-600' : 'border-gray-300'}`}>
                           {isSelected && <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
                         </div>
-                        <span className={`font-medium ${isSelected ? 'text-pomegranate-900' : 'text-gray-700'}`}>{label}</span>
+                        <span className={`font-medium ${isSelected ? 'text-pomegranate-900' : 'text-gray-700'}`}>{t(`options.${key}`)}</span>
                       </div>
                     </div>
 
@@ -317,35 +319,35 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
 
         {step === 3 && (
           <div className="space-y-6 animate-fadeIn">
-            <h3 className="text-lg font-bold text-gray-900">Review & Confirm</h3>
+            <h3 className="text-lg font-bold text-gray-900">{t('results.title')}</h3>
 
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 space-y-4">
               <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">User Type</span>
-                  <span className="font-semibold text-gray-900">{formData.userType === UserType.OWNER ? 'Home Owner' : 'Tenant'}</span>
+                  <span className="text-gray-500 block">{t('form.userType')}</span>
+                  <span className="font-semibold text-gray-900">{formData.userType === UserType.OWNER ? t('form.owner') : t('form.tenant')}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">Policy Start</span>
+                  <span className="text-gray-500 block">{t('form.startDate')}</span>
                   <span className="font-semibold text-gray-900">{formData.startDate}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">Duration</span>
-                  <span className="font-semibold text-gray-900">{formData.durationYears} {formData.durationYears === 1 ? 'Year' : 'Years'}</span>
+                  <span className="text-gray-500 block">{t('form.duration')}</span>
+                  <span className="font-semibold text-gray-900">{formData.durationYears} {t(formData.durationYears === 1 ? 'common.year' : 'common.years')}</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">Domestic Workers</span>
+                  <span className="text-gray-500 block">{t('form.domesticWorkers')}</span>
                   <span className="font-semibold text-gray-900">{formData.domesticWorkersCount === 0 ? 'None' : formData.domesticWorkersCount}</span>
                 </div>
                 {formData.userType === UserType.OWNER && (
                   <div>
-                    <span className="text-gray-500 block">Building Value</span>
-                    <span className="font-semibold text-gray-900">{formData.buildingValue.toLocaleString()} SAR</span>
+                    <span className="text-gray-500 block">{t('form.buildingValue')}</span>
+                    <span className="font-semibold text-gray-900">{formData.buildingValue.toLocaleString()} {t('common.sar')}</span>
                   </div>
                 )}
                 <div>
-                  <span className="text-gray-500 block">Contents Value</span>
-                  <span className="font-semibold text-gray-900">{formData.contentsValue.toLocaleString()} SAR</span>
+                  <span className="text-gray-500 block">{t('form.contentsValue')}</span>
+                  <span className="font-semibold text-gray-900">{formData.contentsValue.toLocaleString()} {t('common.sar')}</span>
                 </div>
               </div>
 
@@ -355,7 +357,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                   <div className="space-y-2">
                     {formData.selectedOptions.map(opt => (
                       <div key={opt} className="flex justify-between items-center text-xs">
-                        <span className="bg-pomegranate-100 text-pomegranate-700 px-2 py-1 rounded font-medium">{OPTIONAL_COVERS[opt]}</span>
+                        <span className="bg-pomegranate-100 text-pomegranate-700 px-2 py-1 rounded font-medium">{t(`options.${opt}`)}</span>
                         {opt === 'JEWELLERY' && (
                           <span className="text-gray-600">Value: SAR {(formData.optionalCoverageValues[opt] || 0).toLocaleString()}</span>
                         )}
@@ -373,18 +375,18 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
 
       <div className="bg-gray-50 px-8 py-5 border-t border-gray-100 flex justify-between items-center">
         {step > 1 ? (
-          <button onClick={handleBack} className="text-gray-600 hover:text-pomegranate-700 font-medium text-sm px-4 py-2">Back</button>
+          <button onClick={handleBack} className="text-gray-600 hover:text-pomegranate-700 font-medium text-sm px-4 py-2">{t('common.cancel')}</button>
         ) : <div />}
 
         {step < 3 ? (
-          <button onClick={handleNext} className="bg-pomegranate-600 hover:bg-pomegranate-700 text-white px-8 py-3 rounded-lg font-medium shadow-md transition-all">Continue</button>
+          <button onClick={handleNext} className="bg-pomegranate-600 hover:bg-pomegranate-700 text-white px-8 py-3 rounded-lg font-medium shadow-md transition-all">{t('common.submit')}</button>
         ) : (
           <button
             onClick={handleSubmit}
             disabled={loading}
             className="bg-gold-500 hover:bg-gold-600 text-white px-8 py-3 rounded-lg font-bold shadow-md transition-all hover:shadow-lg disabled:opacity-70 flex items-center gap-2"
           >
-            {loading ? 'Finding Best Plan...' : 'Get Price'}
+            {loading ? t('common.loading') : t('form.calculate')}
           </button>
         )}
       </div>

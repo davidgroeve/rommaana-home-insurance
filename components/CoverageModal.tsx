@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DETAILED_COVERAGES, EXCLUSIONS } from '../constants';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface CoverageModalProps {
     isOpen: boolean;
@@ -7,6 +8,7 @@ interface CoverageModalProps {
 }
 
 export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose }) => {
+    const { t } = useLanguage();
     const [activeTab, setActiveTab] = useState<'COVERAGE' | 'EXCLUSIONS'>('COVERAGE');
 
     if (!isOpen) return null;
@@ -27,8 +29,8 @@ export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose })
                 {/* Header */}
                 <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between shrink-0 bg-pomegranate-50">
                     <div>
-                        <h2 className="text-xl font-bold text-pomegranate-900">Policy Terms & Conditions</h2>
-                        <p className="text-sm text-pomegranate-700 mt-0.5">Detailed breakdown of your protection</p>
+                        <h2 className="text-xl font-bold text-pomegranate-900">{t('coverage.title')}</h2>
+                        <p className="text-sm text-pomegranate-700 mt-0.5">{t('coverage.subtitle')}</p>
                     </div>
                     <button
                         onClick={onClose}
@@ -45,25 +47,25 @@ export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose })
                     <button
                         onClick={() => setActiveTab('COVERAGE')}
                         className={`flex-1 py-4 text-sm font-bold transition-colors relative ${activeTab === 'COVERAGE'
-                                ? 'text-pomegranate-600'
-                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                            ? 'text-pomegranate-600'
+                            : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                             }`}
                     >
-                        INCLUSIONS (WHAT'S COVERED)
+                        {t('coverage.inclusions')}
                         {activeTab === 'COVERAGE' && (
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-pomegranate-600 animate-fadeIn"></div>
+                            <div className="absolute bottom-0 start-0 end-0 h-1 bg-pomegranate-600 animate-fadeIn"></div>
                         )}
                     </button>
                     <button
                         onClick={() => setActiveTab('EXCLUSIONS')}
                         className={`flex-1 py-4 text-sm font-bold transition-colors relative ${activeTab === 'EXCLUSIONS'
-                                ? 'text-pomegranate-600'
-                                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                            ? 'text-pomegranate-600'
+                            : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                             }`}
                     >
-                        EXCLUSIONS (WHAT'S NOT COVERED)
+                        {t('coverage.exclusions')}
                         {activeTab === 'EXCLUSIONS' && (
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-pomegranate-600 animate-fadeIn"></div>
+                            <div className="absolute bottom-0 start-0 end-0 h-1 bg-pomegranate-600 animate-fadeIn"></div>
                         )}
                     </button>
                 </div>
@@ -95,16 +97,16 @@ export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose })
                         </div>
                     ) : (
                         <div className="space-y-4 animate-fadeIn">
-                            <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+                            <div className="bg-red-50 border-s-4 border-red-400 p-4 mb-6">
                                 <div className="flex">
                                     <div className="shrink-0">
                                         <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
                                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                                         </svg>
                                     </div>
-                                    <div className="ml-3">
+                                    <div className="ms-3">
                                         <p className="text-sm text-red-700">
-                                            The following items and events are not covered under this insurance policy. Please review them carefully.
+                                            {t('coverage.exclusionNotice')}
                                         </p>
                                     </div>
                                 </div>
@@ -133,7 +135,7 @@ export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose })
                         onClick={onClose}
                         className="bg-pomegranate-600 hover:bg-pomegranate-700 text-white px-6 py-2 rounded-lg font-medium transition-colors shadow-sm"
                     >
-                        Close Details
+                        {t('coverage.close')}
                     </button>
                 </div>
             </div>

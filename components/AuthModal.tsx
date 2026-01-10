@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { authService } from '../services/authService';
+import { useLanguage } from '../contexts/LanguageContext';
 import { User } from '../types';
 
 interface AuthModalProps {
@@ -9,10 +10,11 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSuccess }) => {
+  const { t } = useLanguage();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+
   // Form State
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -35,7 +37,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
       onLoginSuccess(user);
       onClose();
     } catch (err: any) {
-      setError(err.message || 'Authentication failed');
+      setError(err.message || t('auth.failed'));
     } finally {
       setIsLoading(false);
     }
@@ -45,26 +47,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all scale-100">
         <div className="bg-pomegranate-700 p-6 text-white text-center relative">
-          <button onClick={onClose} className="absolute top-4 right-4 text-pomegranate-200 hover:text-white">
+          <button onClick={onClose} className="absolute top-4 end-4 text-pomegranate-200 hover:text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
           </button>
-          <h2 className="text-2xl font-bold">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-          <p className="text-pomegranate-200 text-sm mt-1">Manage your home insurance securely</p>
+          <h2 className="text-2xl font-bold">{isLogin ? t('auth.welcome') : t('auth.create')}</h2>
+          <p className="text-pomegranate-200 text-sm mt-1">{t('auth.subtitle')}</p>
         </div>
-        
+
         <div className="p-8">
-            {error && (
-                <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
-                    {error}
-                </div>
-            )}
+          {error && (
+            <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.fullName')}</label>
                 <input
                   type="text"
                   required
@@ -75,9 +77,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
                 />
               </div>
             )}
-            
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.email')}</label>
               <input
                 type="email"
                 required
@@ -89,7 +91,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.password')}</label>
               <input
                 type="password"
                 required
@@ -106,23 +108,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSu
               className="w-full bg-pomegranate-600 hover:bg-pomegranate-700 text-white font-bold py-3 rounded-lg shadow-md transition-colors flex justify-center items-center"
             >
               {isLoading ? (
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
               ) : (
-                  isLogin ? 'Login' : 'Create Account'
+                isLogin ? t('auth.login') : t('auth.create')
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-500">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
+            {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
             <button
               onClick={() => { setIsLogin(!isLogin); setError(''); }}
               className="text-pomegranate-600 font-semibold hover:underline"
             >
-              {isLogin ? 'Sign up' : 'Login'}
+              {isLogin ? t('auth.signUp') : t('auth.login')}
             </button>
           </div>
         </div>

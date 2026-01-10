@@ -12,8 +12,18 @@ import { CoverageModal } from './components/CoverageModal';
 import { QuoteRequest, QuoteResult, User, CustomerDetails } from './types';
 import { authService } from './services/authService';
 import { rommaanaApi } from './services/api'; // Updated import
+import { useLanguage } from './contexts/LanguageContext';
+import { EmbeddedWidget } from './components/EmbeddedWidget';
 
 function App() {
+  // Check for Embed Route
+  const isEmbed = window.location.pathname === '/embed';
+
+  if (isEmbed) {
+    return <EmbeddedWidget />;
+  }
+
+  const { t } = useLanguage();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
@@ -148,16 +158,16 @@ function App() {
             {!quoteResult ? (
               <div className="animate-fadeIn space-y-8">
                 <div className="flex items-center gap-2 mb-6">
-                  <span className="bg-pomegranate-100 text-pomegranate-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Strategic Partnership</span>
+                  <span className="bg-pomegranate-100 text-pomegranate-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">{t('hero.partnerBadge')}</span>
                 </div>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-pomegranate-900 leading-tight">
-                  Protect Your Home with <span className="text-pomegranate-600">Confidence</span>
+                  {t('hero.title')} <span className="text-pomegranate-600">{t('hero.titleHighlight')}</span>
                 </h1>
                 <p className="text-lg sm:text-xl text-gray-600 max-w-2xl leading-relaxed">
-                  Get a comprehensive home insurance quote in seconds. Whether you own or rent, Rommaana covers what matters most.
+                  {t('hero.subtitle')}
                 </p>
 
-                <div className="bg-white border-l-4 border-gold-500 p-6 rounded-r-xl shadow-sm max-w-xl">
+                <div className="bg-white border-s-4 border-gold-500 p-6 rounded-e-xl shadow-sm max-w-xl">
                   <div className="flex gap-4">
                     <div className="shrink-0">
                       <img
@@ -175,6 +185,8 @@ function App() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fadeIn delay-100">
+
+
                   <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition-shadow">
                     <div className="bg-gold-100 p-3 rounded-lg text-gold-600 shrink-0">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -182,8 +194,8 @@ function App() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Best Price Guarantee</h3>
-                      <p className="text-xs text-gray-500 mt-1 font-normal">We compare rates to ensure you get the best deal.</p>
+                      <h3 className="font-semibold text-gray-900">{t('hero.bestPrice')}</h3>
+                      <p className="text-xs text-gray-500 mt-1 font-normal">{t('hero.bestPriceDesc')}</p>
                     </div>
                   </div>
 
@@ -194,27 +206,27 @@ function App() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Verified Coverage</h3>
-                      <p className="text-xs text-gray-500 mt-1 font-normal">All policies are fully compliant and regulated.</p>
+                      <h3 className="font-semibold text-gray-900">{t('hero.verified')}</h3>
+                      <p className="text-xs text-gray-500 mt-1 font-normal">{t('hero.verifiedDesc')}</p>
                     </div>
                   </div>
                 </div>
               </div>
             ) : (
               <div className="bg-pomegranate-50 border border-pomegranate-100 rounded-xl p-8 animate-fadeIn">
-                <h2 className="text-2xl font-bold text-pomegranate-900 mb-4">Why Rommaana?</h2>
+                <h2 className="text-2xl font-bold text-pomegranate-900 mb-4">{t('hero.whyRommaana')}</h2>
                 <ul className="space-y-4">
                   <li className="flex items-center gap-3">
                     <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                    <span className="text-gray-700">24/7 Claims Support</span>
+                    <span className="text-gray-700">{t('hero.feature1')}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                    <span className="text-gray-700">Alternative Accommodation Coverage</span>
+                    <span className="text-gray-700">{t('hero.feature2')}</span>
                   </li>
                   <li className="flex items-center gap-3">
                     <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                    <span className="text-gray-700">Theft & Fire Protection</span>
+                    <span className="text-gray-700">{t('hero.feature3')}</span>
                   </li>
                 </ul>
               </div>
