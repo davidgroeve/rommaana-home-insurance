@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ApiKey } from '../types';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface WidgetCustomizerProps {
     apiKey: ApiKey;
@@ -7,6 +8,7 @@ interface WidgetCustomizerProps {
 }
 
 export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({ apiKey, onClose }) => {
+    const { t } = useLanguage();
     const [primaryColor, setPrimaryColor] = useState('#be123c'); // Default Pomegranate
     const [font, setFont] = useState('ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif');
     const [mode, setMode] = useState<'light' | 'dark'>('light');
@@ -26,7 +28,7 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({ apiKey, onCl
     const copyCode = () => {
         const code = `<iframe src="${iframeUrl}" width="100%" height="800" frameborder="0"></iframe>`;
         navigator.clipboard.writeText(code);
-        alert("Embed code copied!");
+        alert(t('widgetCustomizer.copied'));
     };
 
     return (
@@ -36,7 +38,7 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({ apiKey, onCl
                 {/* Sidebar Controls */}
                 <div className="w-80 border-e border-gray-200 p-6 flex flex-col bg-gray-50 h-full overflow-y-auto shrink-0">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-bold text-gray-900">Widget Studio</h2>
+                        <h2 className="text-xl font-bold text-gray-900">{t('widgetCustomizer.studio')}</h2>
                         <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -47,7 +49,7 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({ apiKey, onCl
                     <div className="space-y-6 flex-1">
                         {/* Color Picker */}
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Primary Color</label>
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{t('widgetCustomizer.primaryColor')}</label>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="color"
@@ -61,26 +63,26 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({ apiKey, onCl
 
                         {/* Mode Toggle */}
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Theme Mode</label>
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{t('widgetCustomizer.themeMode')}</label>
                             <div className="flex p-1 bg-gray-200 rounded-lg">
                                 <button
                                     onClick={() => setMode('light')}
                                     className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === 'light' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
                                 >
-                                    Light
+                                    {t('widgetCustomizer.light')}
                                 </button>
                                 <button
                                     onClick={() => setMode('dark')}
                                     className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${mode === 'dark' ? 'bg-gray-800 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
                                 >
-                                    Dark
+                                    {t('widgetCustomizer.dark')}
                                 </button>
                             </div>
                         </div>
 
                         {/* Font Selector */}
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Typography</label>
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{t('widgetCustomizer.typography')}</label>
                             <select
                                 value={font}
                                 onChange={(e) => setFont(e.target.value)}
@@ -95,14 +97,14 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({ apiKey, onCl
 
                         {/* Partner Info */}
                         <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
-                            <p className="text-xs text-blue-600 font-bold uppercase mb-1">Active Partner</p>
+                            <p className="text-xs text-blue-600 font-bold uppercase mb-1">{t('widgetCustomizer.activePartner')}</p>
                             <p className="text-sm text-blue-900 font-medium truncate">{apiKey.partner_name}</p>
                         </div>
                     </div>
 
                     {/* Embed Code */}
                     <div className="mt-8">
-                        <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Embed Code</label>
+                        <label className="block text-xs font-bold text-gray-500 uppercase mb-2">{t('widgetCustomizer.embedCode')}</label>
                         <div className="bg-gray-900 rounded-lg p-3 relative group">
                             <code className="text-[10px] text-green-400 font-mono break-all block leading-relaxed opacity-80">
                                 &lt;iframe src="{iframeUrl}" width="100%" height="800" frameborder="0"&gt;&lt;/iframe&gt;
@@ -118,16 +120,16 @@ export const WidgetCustomizer: React.FC<WidgetCustomizerProps> = ({ apiKey, onCl
                             </button>
                         </div>
                         <button onClick={copyCode} className="w-full mt-2 bg-pomegranate-600 hover:bg-pomegranate-700 text-white py-2 rounded-lg text-sm font-bold transition-all">
-                            Copy Embed Code
+                            {t('widgetCustomizer.copyEmbed')}
                         </button>
                     </div>
                 </div>
 
                 {/* Preview Area */}
                 <div className="flex-1 bg-gray-200 p-8 flex flex-col relative">
-                    <div className="absolute top-4 left-8 text-xs font-bold text-gray-500 uppercase">Live Preview</div>
+                    <div className="absolute top-4 left-8 text-xs font-bold text-gray-500 uppercase">{t('widgetCustomizer.livePreview')}</div>
                     <div className="flex-1 bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-300">
-                        {iframeUrl && <iframe src={iframeUrl} className="w-full h-full" title="Widget Preview" />}
+                        {iframeUrl && <iframe src={iframeUrl} className="w-full h-full" title={t('widgetCustomizer.livePreview')} />}
                     </div>
                 </div>
 

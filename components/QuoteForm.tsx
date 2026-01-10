@@ -102,29 +102,29 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
     if (currentStep === 1) {
       if (formData.userType === UserType.OWNER) {
         if (formData.buildingValue <= 0) {
-          newErrors.buildingValue = 'Building value required';
+          newErrors.buildingValue = t('validation.buildingRequired');
           isValid = false;
         } else if (formData.buildingValue > 4000000) {
-          newErrors.buildingValue = 'Maximum building coverage is SAR 4,000,000';
+          newErrors.buildingValue = t('validation.buildingMax');
           isValid = false;
         }
       }
 
       if (formData.contentsValue <= 0) {
-        newErrors.contentsValue = 'Contents value required';
+        newErrors.contentsValue = t('validation.contentsRequired');
         isValid = false;
       } else if (formData.contentsValue > 365000) {
-        newErrors.contentsValue = 'Maximum contents coverage is SAR 365,000';
+        newErrors.contentsValue = t('validation.contentsMax');
         isValid = false;
       }
 
       if (!formData.startDate) {
-        newErrors.startDate = 'Start date required';
+        newErrors.startDate = t('validation.dateRequired');
         isValid = false;
       }
 
       if (formData.domesticWorkersCount < 0) {
-        newErrors.domesticWorkersCount = 'Invalid number';
+        newErrors.domesticWorkersCount = t('validation.invalidNumber');
         isValid = false;
       }
     }
@@ -148,7 +148,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
       onQuoteGenerated(result, formData);
     } catch (error: any) {
       console.error("Calculation failed", error);
-      alert(error.message || "Could not calculate quote");
+      alert(error.message || t('validation.calcError'));
     } finally {
       setLoading(false);
     }
@@ -239,7 +239,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                   value={formData.buildingValue}
                   onChange={handleInputChange}
                   className={`w-full border rounded-lg p-3 focus:ring-2 focus:ring-pomegranate-500 outline-none bg-white text-gray-900 ${errors.buildingValue ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
-                  placeholder="e.g. 1000000"
+                  placeholder={t('form.placeholder')}
                 />
                 {errors.buildingValue && <p className="text-xs text-red-600 mt-1 font-medium">{errors.buildingValue}</p>}
               </div>
@@ -257,7 +257,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                   value={formData.contentsValue}
                   onChange={handleInputChange}
                   className={`w-full border rounded-lg p-3 focus:ring-2 focus:ring-pomegranate-500 outline-none bg-white text-gray-900 ${errors.contentsValue ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
-                  placeholder="e.g. 50000"
+                  placeholder={t('form.placeholder')}
                 />
                 {errors.contentsValue && <p className="text-xs text-red-600 mt-1 font-medium">{errors.contentsValue}</p>}
               </div>
@@ -300,10 +300,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
 
                     {isSelected && key === 'JEWELLERY' && (
                       <div className="mt-4 animate-slideDown">
-                        <label className="block text-xs font-bold text-pomegranate-700 uppercase mb-1">Itemized Value (SAR)</label>
+                        <label className="block text-xs font-bold text-pomegranate-700 uppercase mb-1">{t('options.itemizedValue')}</label>
                         <input
                           type="number"
-                          placeholder="Enter value..."
+                          placeholder={t('options.enterValue')}
                           value={formData.optionalCoverageValues[key as OptionalCoverageId] || ''}
                           onChange={(e) => handleOptionValueChange(key as OptionalCoverageId, e.target.value)}
                           className="w-full border-b border-pomegranate-200 bg-transparent py-1 text-sm text-pomegranate-900 focus:border-pomegranate-600 outline-none"
@@ -337,7 +337,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
                 </div>
                 <div>
                   <span className="text-gray-500 block">{t('form.domesticWorkers')}</span>
-                  <span className="font-semibold text-gray-900">{formData.domesticWorkersCount === 0 ? 'None' : formData.domesticWorkersCount}</span>
+                  <span className="font-semibold text-gray-900">{formData.domesticWorkersCount === 0 ? t('common.none') : formData.domesticWorkersCount}</span>
                 </div>
                 {formData.userType === UserType.OWNER && (
                   <div>
@@ -352,20 +352,20 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({ onQuoteGenerated }) => {
               </div>
 
               <div className="pt-4 border-t border-gray-200">
-                <span className="text-gray-500 block mb-2 text-sm">Additional Options</span>
+                <span className="text-gray-500 block mb-2 text-sm">{t('options.additionalOptions')}</span>
                 {formData.selectedOptions.length > 0 ? (
                   <div className="space-y-2">
                     {formData.selectedOptions.map(opt => (
                       <div key={opt} className="flex justify-between items-center text-xs">
                         <span className="bg-pomegranate-100 text-pomegranate-700 px-2 py-1 rounded font-medium">{t(`options.${opt}`)}</span>
                         {opt === 'JEWELLERY' && (
-                          <span className="text-gray-600">Value: SAR {(formData.optionalCoverageValues[opt] || 0).toLocaleString()}</span>
+                          <span className="text-gray-600">{t('options.valueSar')} {(formData.optionalCoverageValues[opt] || 0).toLocaleString()}</span>
                         )}
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <span className="text-gray-400 text-sm italic">None selected</span>
+                  <span className="text-gray-400 text-sm italic">{t('options.noneSelected')}</span>
                 )}
               </div>
             </div>

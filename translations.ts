@@ -13,6 +13,7 @@ export const translations = {
       submit: "Submit",
       cancel: "Cancel",
       close: "Close",
+      none: "None",
     },
     header: {
       home: "Home",
@@ -50,6 +51,17 @@ export const translations = {
       domesticWorkersHint: "Number of helpers/drivers to insure",
       startDate: "Policy Start Date",
       calculate: "Calculate Premium",
+      placeholder: "e.g. 100,000",
+    },
+    validation: {
+      required: "This field is required",
+      buildingRequired: "Building value required",
+      buildingMax: "Maximum building coverage is SAR 4,000,000",
+      contentsRequired: "Contents value required",
+      contentsMax: "Maximum contents coverage is SAR 365,000",
+      dateRequired: "Start date required",
+      invalidNumber: "Invalid number",
+      calcError: "Could not calculate quote"
     },
     results: {
       title: "Your Quote Result",
@@ -91,6 +103,11 @@ export const translations = {
       PAINTINGS: "Paintings & Curios",
       EMERGENCY: "Emergency Purchase",
       ALT_ACCOMM: "Alternative Accommodation",
+      itemizedValue: "Itemized Value (SAR)",
+      enterValue: "Enter value...",
+      additionalOptions: "Additional Options",
+      valueSar: "Value: SAR",
+      noneSelected: "None selected",
     },
     dashboard: {
       title: "My Policies",
@@ -203,25 +220,39 @@ export const translations = {
       successTitle: "API Key Generated!",
       partner: "Partner",
       secret: "Secret API Key (Copy now, it won't be shown again)",
-      done: "Done",
-      apiDocs: {
-        title: "B2B Integration Guide",
-        description: "Rommaana provides a robust API for partners to integrate our insurance pricing and quote submission directly into their own platforms (Mobile Apps, ERPs, or Websites).",
-        calculate: {
-          desc: "Perform real-time premium calculation based on Rommaana's proprietary pricing engine.",
-          headers: "Required Headers"
-        },
-        submit: {
-          desc: "Send a formal issuance request to Al Etihad via Rommaana's hub.",
-          data: "Required Data",
-          dataDesc: "Includes customer details (ID, National Address) and calculated quote reference."
-        },
-        widget: {
-          title: "Embedded Quote Widget",
-          description: "Want to show our quote form on your website? Paste this code snippet into your HTML to render a fully functional Rommaana Home Insurance component."
-        },
-        copySnippet: "Copy Snippet"
-      }
+      done: "Done"
+    },
+    apiDocs: {
+      title: "B2B Integration Guide",
+      description: "Rommaana provides a robust API for partners to integrate our insurance pricing and quote submission directly into their own platforms (Mobile Apps, ERPs, or Websites).",
+      calculate: {
+        desc: "Perform real-time premium calculation based on Rommaana's proprietary pricing engine.",
+        headers: "Required Headers"
+      },
+      submit: {
+        desc: "Send a formal issuance request to Al Etihad via Rommaana's hub.",
+        data: "Required Data",
+        dataDesc: "Includes customer details (ID, National Address) and calculated quote reference."
+      },
+      widget: {
+        title: "Embedded Quote Widget",
+        description: "Want to show our quote form on your website? Paste this code snippet into your HTML to render a fully functional Rommaana Home Insurance component."
+      },
+      copySnippet: "Copy Snippet"
+    },
+    widgetCustomizer: {
+      studio: "Widget Studio",
+      primaryColor: "Primary Color",
+      themeMode: "Theme Mode",
+      light: "Light",
+      dark: "Dark",
+      typography: "Typography",
+      activePartner: "Active Partner",
+      embedCode: "Embed Code",
+      copyEmbed: "Copy Embed Code",
+      livePreview: "Live Preview",
+      copied: "Embed code copied!",
+      widget: "Widget"
     }
   },
   ar: {
@@ -236,6 +267,7 @@ export const translations = {
       submit: "إرسال",
       cancel: "إلغاء",
       close: "إغلاق",
+      none: "لا يوجد",
     },
     header: {
       home: "الرئيسية",
@@ -273,6 +305,17 @@ export const translations = {
       domesticWorkersHint: "عدد المساعدين/السائقين المطلوب تأمينهم",
       startDate: "تاريخ بدء الوثيقة",
       calculate: "حساب السعر",
+      placeholder: "مثلاً: 100,000",
+    },
+    validation: {
+      required: "هذا الحقل مطلوب",
+      buildingRequired: "قيمة المبنى مطلوبة",
+      buildingMax: "الحد الأقصى لتغطية المباني هو 4,000,000 ر.س",
+      contentsRequired: "قيمة المحتويات مطلوبة",
+      contentsMax: "الحد الأقصى لتغطية المحتويات هو 365,000 ر.س",
+      dateRequired: "تاريخ البدء مطلوب",
+      invalidNumber: "رقم غير صالح",
+      calcError: "تعذر حساب عرض السعر"
     },
     results: {
       title: "نتائج العرض",
@@ -314,6 +357,11 @@ export const translations = {
       PAINTINGS: "اللوحات والتحف",
       EMERGENCY: "المشتريات الطارئة",
       ALT_ACCOMM: "السكن البديل",
+      itemizedValue: "القيمة المفصلة (ر.س)",
+      enterValue: "أدخل القيمة...",
+      additionalOptions: "خيارات إضافية",
+      valueSar: "القيمة: ر.س",
+      noneSelected: "لم يتم اختيار أي خيار",
     },
     dashboard: {
       title: "وثائقي",
@@ -426,25 +474,39 @@ export const translations = {
       successTitle: "تم توليد المفتاح!",
       partner: "الشريك",
       secret: "مفتاح API السري (انسخه الآن، لن يظهر مرة أخرى)",
-      done: "تم",
-      apiDocs: {
-        title: "دليل التكامل B2B",
-        description: "توفر رمانة واجهة برمجة تطبيقات (API) قوية للشركاء لدمج تسعير التأمين وتقديم العروض مباشرة في منصاتهم الخاصة (تطبيقات الجوال، أنظمة ERP، أو المواقع الإلكترونية).",
-        calculate: {
-          desc: "إجراء حساب القسط في الوقت الفعلي بناءً على محرك التسعير الخاص برمانة.",
-          headers: "الترويسات المطلوبة"
-        },
-        submit: {
-          desc: "إرسال طلب إصدار رسمي إلى شركة الاتحاد عبر مركز رمانة.",
-          data: "البيانات المطلوبة",
-          dataDesc: "تتضمن تفاصيل العميل (الهوية، العنوان الوطني) ومرجع العرض المحسوب."
-        },
-        widget: {
-          title: "ودجة عرض السعر المدمجة",
-          description: "هل ترغب في عرض نموذج التسعير الخاص بنا على موقعك؟ الصق مقتطف الشفرة هذا في HTML الخاص بك لعرض مكون تأمين المنازل من رمانة بكامل وظائفه."
-        },
-        copySnippet: "نسخ المقتطف"
-      }
+      done: "تم"
+    },
+    apiDocs: {
+      title: "دليل التكامل B2B",
+      description: "توفر رمانة واجهة برمجة تطبيقات (API) قوية للشركاء لدمج تسعير التأمين وتقديم العروض مباشرة في منصاتهم الخاصة (تطبيقات الجوال، أنظمة ERP، أو المواقع الإلكترونية).",
+      calculate: {
+        desc: "إجراء حساب القسط في الوقت الفعلي بناءً على محرك التسعير الخاص برمانة.",
+        headers: "الترويسات المطلوبة"
+      },
+      submit: {
+        desc: "إرسال طلب إصدار رسمي إلى شركة الاتحاد عبر مركز رمانة.",
+        data: "البيانات المطلوبة",
+        dataDesc: "تتضمن تفاصيل العميل (الهوية، العنوان الوطني) ومرجع العرض المحسوب."
+      },
+      widget: {
+        title: "ودجة عرض السعر المدمجة",
+        description: "هل ترغب في عرض نموذج التسعير الخاص بنا على موقعك؟ الصق مقتطف الشفرة هذا في HTML الخاص بك لعرض مكون تأمين المنازل من رمانة بكامل وظائفه."
+      },
+      copySnippet: "نسخ المقتطف"
+    },
+    widgetCustomizer: {
+      studio: "أستوديو الودجة",
+      primaryColor: "اللون الأساسي",
+      themeMode: "وضع الثيم",
+      light: "فاتح",
+      dark: "داكن",
+      typography: "الخط",
+      activePartner: "الشريك النشط",
+      embedCode: "رمز المضمن",
+      copyEmbed: "نسخ رمز المضمن",
+      livePreview: "المعاينة المباشرة",
+      copied: "تم نسخ رمز المضمن!",
+      widget: "الودجة"
     }
   }
 };
