@@ -29,24 +29,25 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                     </div>
 
                     <div className="flex items-baseline gap-2">
-                        <span className="text-lg text-pomegranate-200">SAR</span>
+                        <span className="text-lg text-pomegranate-200">{t('common.sar')}</span>
                         <span className="text-5xl font-bold text-white">{result.totalPremium.toLocaleString()}</span>
                     </div>
-                    <p className="text-xs text-pomegranate-300 mt-1">Inclusive of VAT</p>
+                    <p className="text-xs text-pomegranate-300 mt-1">{t('results.inclusiveVat')}</p>
+
 
                     <div className="mt-8 grid grid-cols-2 gap-3">
                         <div className="bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20">
-                            <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">Public Liability</p>
-                            <p className="text-sm font-bold text-white">SAR {result.details.publicLiability.toLocaleString()}</p>
+                            <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">{t('results.publicLiability')}</p>
+                            <p className="text-sm font-bold text-white">{t('common.sar')} {result.details.publicLiability.toLocaleString()}</p>
                         </div>
                         <div className="bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20">
-                            <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">Contents Total</p>
-                            <p className="text-sm font-bold text-white">SAR {result.limits.contents.toLocaleString()}</p>
+                            <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">{t('results.contentsTotal')}</p>
+                            <p className="text-sm font-bold text-white">{t('common.sar')} {result.limits.contents.toLocaleString()}</p>
                         </div>
                         {request.userType === UserType.OWNER && (
                             <div className="bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20 col-span-2">
-                                <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">Main Building Coverage</p>
-                                <p className="text-sm font-bold text-white">SAR {result.limits.building.toLocaleString()}</p>
+                                <p className="text-[10px] uppercase text-pomegranate-200 font-bold mb-1">{t('results.mainBuildingCoverage')}</p>
+                                <p className="text-sm font-bold text-white">{t('common.sar')} {result.limits.building.toLocaleString()}</p>
                             </div>
                         )}
                     </div>
@@ -60,7 +61,7 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                         <p className="text-gray-800 font-mono">{result.referenceId}</p>
                     </div>
                     <div className="text-end">
-                        <p className="text-xs text-gray-400 uppercase font-semibold">Coverage Package</p>
+                        <p className="text-xs text-gray-400 uppercase font-semibold">{t('results.coveragePackage')}</p>
                         <p className="text-gray-800 font-medium">
                             {result.schemeName}
                         </p>
@@ -70,17 +71,17 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                 {/* Coverage Highlights - Main Items */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="bg-gray-50 p-3 rounded-lg">
-                        <p className="text-xs text-gray-500">Public Liability</p>
-                        <p className="font-bold text-gray-900">SAR {result.details.publicLiability.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">{t('results.publicLiability')}</p>
+                        <p className="font-bold text-gray-900">{t('common.sar')} {result.details.publicLiability.toLocaleString()}</p>
                     </div>
                     <div className="bg-gray-50 p-3 rounded-lg">
-                        <p className="text-xs text-gray-500">Contents Total</p>
-                        <p className="font-bold text-gray-900">SAR {result.limits.contents.toLocaleString()}</p>
+                        <p className="text-xs text-gray-500">{t('results.contentsTotal')}</p>
+                        <p className="font-bold text-gray-900">{t('common.sar')} {result.limits.contents.toLocaleString()}</p>
                     </div>
                     {request.userType === UserType.OWNER && (
                         <div className="bg-gray-50 p-3 rounded-lg col-span-2">
-                            <p className="text-xs text-gray-500">Building Coverage</p>
-                            <p className="font-bold text-gray-900">SAR {result.limits.building.toLocaleString()}</p>
+                            <p className="text-xs text-gray-500">{t('results.buildingCoverage')}</p>
+                            <p className="font-bold text-gray-900">{t('common.sar')} {result.limits.building.toLocaleString()}</p>
                         </div>
                     )}
                 </div>
@@ -104,41 +105,42 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                             <table className="w-full text-start">
                                 <thead className="bg-gray-100 text-gray-600 text-xs uppercase">
                                     <tr>
-                                        <th className="px-4 py-2 font-semibold">Cover Category</th>
-                                        <th className="px-4 py-2 font-semibold text-end">Limit (SAR)</th>
+                                        <th className="px-4 py-2 font-semibold text-start">{t('details.coverCategory')}</th>
+                                        <th className="px-4 py-2 font-semibold text-end">{t('details.limitSar')}</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-100 text-gray-700">
                                     {request.userType === UserType.OWNER && (
                                         <>
-                                            <tr><td className="px-4 py-2">Building Coverage</td><td className="px-4 py-2 text-end font-medium">{result.limits.building.toLocaleString()}</td></tr>
-                                            <tr><td className="px-4 py-2 ps-8 text-gray-500">Building Rent</td><td className="px-4 py-2 text-end text-gray-500">{result.details.buildingRent.toLocaleString()}</td></tr>
+                                            <tr><td className="px-4 py-2">{t('results.buildingCoverage')}</td><td className="px-4 py-2 text-end font-medium">{result.limits.building.toLocaleString()}</td></tr>
+                                            <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.buildingRent')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.buildingRent.toLocaleString()}</td></tr>
                                         </>
                                     )}
-                                    <tr><td className="px-4 py-2 bg-gray-50 font-medium">Contents Total</td><td className="px-4 py-2 bg-gray-50 text-end font-bold">{result.limits.contents.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Furniture, Fixtures</td><td className="px-4 py-2 text-end text-gray-500">{result.details.furniture.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Clothing</td><td className="px-4 py-2 text-end text-gray-500">{result.details.clothing.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Appliances</td><td className="px-4 py-2 text-end text-gray-500">{result.details.appliances.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">TV / Home Theatre</td><td className="px-4 py-2 text-end text-gray-500">{result.details.tvAudio.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">AC / Electronics</td><td className="px-4 py-2 text-end text-gray-500">{result.details.acElectronics.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Kitchen Crockery</td><td className="px-4 py-2 text-end text-gray-500">{result.details.kitchen.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">Carpets</td><td className="px-4 py-2 text-end text-gray-500">{result.details.carpets.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 bg-gray-50 font-medium">{t('results.contentsTotal')}</td><td className="px-4 py-2 bg-gray-50 text-end font-bold">{result.limits.contents.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.furniture')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.furniture.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.clothing')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.clothing.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.appliances')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.appliances.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.tvAudio')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.tvAudio.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.acElectronics')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.acElectronics.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.kitchen')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.kitchen.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 ps-8 text-gray-500">{t('details.carpets')}</td><td className="px-4 py-2 text-end text-gray-500">{result.details.carpets.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 bg-gray-50 font-medium">{t('details.liabilityOthers')}</td><td className="px-4 py-2 bg-gray-50"></td></tr>
+                                    <tr><td className="px-4 py-2">{t('results.publicLiability')}</td><td className="px-4 py-2 text-end font-medium">{result.details.publicLiability.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2">{t('details.domesticStaff')}</td><td className="px-4 py-2 text-end">{result.details.domesticStaff.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2">{t('details.paOwner')}</td><td className="px-4 py-2 text-end">{result.details.paOwner.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2">{t('details.burglary')}</td><td className="px-4 py-2 text-end">{result.details.burglary.toLocaleString()}</td></tr>
+                                    <tr><td className="px-4 py-2 text-red-500">{t('details.excess')}</td><td className="px-4 py-2 text-end text-red-500">-{result.details.excess.toLocaleString()}</td></tr>
 
-                                    <tr><td className="px-4 py-2 bg-gray-50 font-medium">Liability & Others</td><td className="px-4 py-2 bg-gray-50"></td></tr>
-                                    <tr><td className="px-4 py-2">Public Liability</td><td className="px-4 py-2 text-end font-medium">{result.details.publicLiability.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2">Domestic Staff Liability</td><td className="px-4 py-2 text-end">{result.details.domesticStaff.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2">Personal Accident (Owner/Spouse)</td><td className="px-4 py-2 text-end">{result.details.paOwner.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2">Burglary Limit</td><td className="px-4 py-2 text-end">{result.details.burglary.toLocaleString()}</td></tr>
-                                    <tr><td className="px-4 py-2 text-red-500">Excess (Deductible)</td><td className="px-4 py-2 text-end text-red-500">-{result.details.excess.toLocaleString()}</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     )}
                 </div>
 
-                <h4 className="font-semibold text-gray-900 mb-4">Pricing Breakdown</h4>
+                <h4 className="font-semibold text-gray-900 mb-4">{t('results.pricingBreakdown')}</h4>
                 <ul className="space-y-3 text-sm text-gray-600 mb-8">
                     <li className="flex justify-between">
+
                         <span>{t('results.basePremium')} ({result.schemeName})</span>
                         <span>{t('common.sar')} {result.breakdown.basePremium.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                     </li>
@@ -156,23 +158,23 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                     )}
                     {result.breakdown.durationMultiplier > 1 && (
                         <li className="flex justify-between font-semibold text-pomegranate-600 pt-1">
-                            <span>Multi-year Duration ({result.breakdown.durationMultiplier}x)</span>
-                            <span>SAR {(result.netPremium / result.breakdown.durationMultiplier).toLocaleString(undefined, { minimumFractionDigits: 2 })} per year</span>
+                            <span>{t('results.multiYear')} ({result.breakdown.durationMultiplier}x)</span>
+                            <span>{t('common.sar')} {(result.netPremium / result.breakdown.durationMultiplier).toLocaleString(undefined, { minimumFractionDigits: 2 })} {t('results.perYear')}</span>
                         </li>
                     )}
                     <li className="flex justify-between pt-2 border-t border-dashed border-gray-200">
-                        <span>VAT (5%)</span>
-                        <span>SAR {result.vat.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                        <span>{t('results.vat')}</span>
+                        <span>{t('common.sar')} {result.vat.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
                     </li>
                 </ul>
 
                 {request.selectedOptions.length > 0 && (
                     <div className="mb-8">
-                        <h4 className="font-semibold text-gray-900 mb-2 text-sm">Included Extras</h4>
+                        <h4 className="font-semibold text-gray-900 mb-2 text-sm">{t('results.includedExtras')}</h4>
                         <div className="flex flex-wrap gap-2">
                             {request.selectedOptions.map(opt => (
                                 <span key={opt} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded border border-gray-200">
-                                    {OPTIONAL_COVERS[opt]}
+                                    {t(`options.${opt}`)}
                                 </span>
                             ))}
                         </div>
@@ -191,7 +193,7 @@ export const QuoteResultCard: React.FC<QuoteResultCardProps> = ({ result, reques
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                Processing...
+                                {t('results.processing')}
                             </>
                         ) : (
                             t('results.requestIssuance')
