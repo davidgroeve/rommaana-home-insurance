@@ -228,7 +228,57 @@ export const translations = {
       sending: "Sending...",
       resend: "ReSend Documents",
       sent: "Documents Sent",
-      notSent: "Not sent"
+      notSent: "Not sent",
+      access: "ADMIN ACCESS",
+      failedSend: "Failed to send emails."
+    },
+    howItWorks: {
+      heroSubtitle: "Explore the high-performance API mesh that connects Rommaana's logic with our global B2B partner network.",
+      coreTechnology: "Core Technology",
+      integrationPhases: "INTEGRATION PHASES",
+      lifecycleTitle: "End-to-End API Lifecycle",
+      steps: {
+        auth: {
+          title: "Secure Authentication",
+          desc: "Every partner uses a unique API Secret (rh_*) that is validated for every single request."
+        },
+        pricing: {
+          title: "Real-time Pricing",
+          desc: "Our proprietary engine calculates premiums based on dynamic risk parameters in milliseconds."
+        },
+        embedded: {
+          title: "Embedded Integration",
+          desc: "Partners can host the entire quote experience within their own platforms using our JS Widget."
+        },
+        data: {
+          title: "Data Hub",
+          desc: "Persistent quote & policy storage"
+        },
+        issuance: {
+          title: "Issuance Portal",
+          desc: "Automated routing to Al Etihad"
+        }
+      },
+      statuses: {
+        secure: "Secure",
+        fast: "Fast",
+        sync: "Sync",
+        final: "Final"
+      },
+      architecture: {
+        title: "Technical Architecture",
+        subtitle: "\"The Journey of a Data Packet\"",
+        liveMesh: "Live Connection Mesh",
+        integrationCore: "Integration Core",
+        apiSecret: "API Secret",
+        schema: "Schema",
+        sla: "SLA"
+      },
+      quality: {
+        tagline: "One Pulse. One Connection.",
+        title: "Bridging the Gap Between Risk and Digital.",
+        desc: "Our B2B connectivity layer is engineered for velocity. By bridging the gap between risk carriers and digital frontends, Rommaana empowers partners to deliver premium protection with a single integration."
+      }
     },
     b2b: {
       generateTitle: "Generate New B2B API Key",
@@ -511,7 +561,57 @@ export const translations = {
       sending: "جاري الإرسال...",
       resend: "إعادة إرسال",
       sent: "تم الإرسال",
-      notSent: "لم ترسل"
+      notSent: "لم ترسل",
+      access: "صلاحية المسؤول",
+      failedSend: "فشل في إرسال رسائل البريد الإلكتروني."
+    },
+    howItWorks: {
+      heroSubtitle: "استكشف شبكة الـ API عالية الأداء التي تربط منطق رمانة بشبكة شركاء B2B العالمية الخاصة بنا.",
+      coreTechnology: "التكنولوجيا الأساسية",
+      integrationPhases: "مراحل التكامل",
+      lifecycleTitle: "دورة حياة API المتكاملة",
+      steps: {
+        auth: {
+          title: "المصادقة الآمنة",
+          desc: "يستخدم كل شريك سراً فريداً (rh_*) يتم التحقق منه لكل طلب."
+        },
+        pricing: {
+          title: "التسعير المباشر",
+          desc: "يقوم محركنا بحساب الأقساط بناءً على معايير المخاطر الديناميكية في أجزاء من الثانية."
+        },
+        embedded: {
+          title: "التكامل المدمج",
+          desc: "يمكن للشركاء استضافة تجربة عرض السعر كاملة داخل منصاتهم عبر الـ Widget."
+        },
+        data: {
+          title: "مركز البيانات",
+          desc: "تخزين دائم لعروض الأسعار والسياسات"
+        },
+        issuance: {
+          title: "بوابة الإصدار",
+          desc: "توجيه آلي إلى شركة الاتحاد"
+        }
+      },
+      statuses: {
+        secure: "آمن",
+        fast: "سريع",
+        sync: "متزامن",
+        final: "نهائي"
+      },
+      architecture: {
+        title: "البنية التقنية",
+        subtitle: "\"رحلة حزمة البيانات\"",
+        liveMesh: "شبكة الاتصال الحية",
+        integrationCore: "جوهر التكامل",
+        apiSecret: "سر الـ API",
+        schema: "المخطط",
+        sla: "اتفاقية الخدمة"
+      },
+      quality: {
+        tagline: "نبض واحد. اتصال واحد.",
+        title: "سد الفجوة بين المخاطر والرقمنة.",
+        desc: "تم تصميم طبقة اتصال B2B الخاصة بنا من أجل السرعة. من خلال سد الفجوة بين شركات التأمين والواجهات الرقمية، تمكن رمانة الشركاء من تقديم حماية متميزة بتكامل واحد."
+      }
     },
     b2b: {
       generateTitle: "توليد مفتاح API جديد",

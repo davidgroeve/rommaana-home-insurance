@@ -7,27 +7,27 @@ export const HowItWorks: React.FC = () => {
 
     const lifecycleSteps = [
         {
-            title: isRtl ? "المصادقة" : "Auth Gateway",
-            status: "Secure",
-            desc: isRtl ? "تحقق من المفتاح في الوقت الفعلي" : "Real-time API key validation",
+            title: t('howItWorks.steps.auth.title'),
+            status: t('howItWorks.statuses.secure'),
+            desc: t('howItWorks.steps.auth.desc'),
             icon: "🔑"
         },
         {
-            title: isRtl ? "محرك التسعير" : "Pricing Engine",
-            status: "Fast",
-            desc: isRtl ? "أجزاء من الثانية للحصول على السعر" : "Sub-second premium calculation",
+            title: t('howItWorks.steps.pricing.title'),
+            status: t('howItWorks.statuses.fast'),
+            desc: t('howItWorks.steps.pricing.desc'),
             icon: "💎"
         },
         {
-            title: isRtl ? "مركز البيانات" : "Data Hub",
-            status: "Sync",
-            desc: isRtl ? "تخزين العروض والوثائق" : "Persistent quote & policy storage",
+            title: t('howItWorks.steps.data.title'),
+            status: t('howItWorks.statuses.sync'),
+            desc: t('howItWorks.steps.data.desc'),
             icon: "📜"
         },
         {
-            title: isRtl ? "بوابة الإصدار" : "Issuance Portal",
-            status: "Final",
-            desc: isRtl ? "إرسال المستندات لشركة الاتحاد" : "Automated routing to Al Etihad",
+            title: t('howItWorks.steps.issuance.title'),
+            status: t('howItWorks.statuses.final'),
+            desc: t('howItWorks.steps.issuance.desc'),
             icon: "✉️"
         }
     ];
@@ -44,13 +44,13 @@ export const HowItWorks: React.FC = () => {
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-10 z-20">
                     <div className="flex items-center gap-3 mb-4">
-                        <span className="bg-pomegranate-600 text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest uppercase shadow-lg shadow-pomegranate-900/50">Core Technology</span>
+                        <span className="bg-pomegranate-600 text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest uppercase shadow-lg shadow-pomegranate-900/50">{t('howItWorks.coreTechnology')}</span>
                     </div>
                     <h2 className="text-5xl font-black text-white mb-4 tracking-tight">
                         {t('admin.howItWorks')}
                     </h2>
                     <p className="text-slate-300 max-w-2xl text-xl leading-relaxed font-medium">
-                        Explore the high-performance API mesh that connects Rommaana's logic with our global B2B partner network.
+                        {t('howItWorks.heroSubtitle')}
                     </p>
                 </div>
             </div>
@@ -59,26 +59,26 @@ export const HowItWorks: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className={`space-y-8 ${isRtl ? 'order-first lg:order-last' : ''}`}>
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 font-bold text-xs border border-slate-200">
-                        01 / INTEGRATION PHASES
+                        {t('howItWorks.integrationPhases')}
                     </div>
-                    <h3 className="text-3xl font-extrabold text-gray-900 tracking-tight">End-to-End API Lifecycle</h3>
+                    <h3 className="text-3xl font-extrabold text-gray-900 tracking-tight">{t('howItWorks.lifecycleTitle')}</h3>
 
                     <div className="grid grid-cols-1 gap-4">
                         {[
                             {
                                 step: "01",
-                                title: isRtl ? "المصادقة" : "Secure Authentication",
-                                desc: isRtl ? "كل شريك لديه مفتاح خاص (rh_*) يتم التحقق منه قبل أي عملية." : "Every partner uses a unique API Secret (rh_*) that is validated for every single request."
+                                title: t('howItWorks.steps.auth.title'),
+                                desc: t('howItWorks.steps.auth.desc')
                             },
                             {
                                 step: "02",
-                                title: isRtl ? "التسعير المباشر" : "Real-time Pricing",
-                                desc: isRtl ? "محرك التسعير الخاص بنا يقدم عروض أسعار دقيقة في أجزاء من الثانية." : "Our proprietary engine calculates premiums based on dynamic risk parameters in milliseconds."
+                                title: t('howItWorks.steps.pricing.title'),
+                                desc: t('howItWorks.steps.pricing.desc')
                             },
                             {
                                 step: "03",
-                                title: isRtl ? "التكامل المدمج" : "Embedded Integration",
-                                desc: isRtl ? "يمكن للشركاء دمج نموذج التسعير الخاص بنا مباشرة عبر الـ Widget." : "Partners can host the entire quote experience within their own platforms using our JS Widget."
+                                title: t('howItWorks.steps.embedded.title'),
+                                desc: t('howItWorks.steps.embedded.desc')
                             }
                         ].map((item, idx) => (
                             <div key={idx} className="flex gap-6 p-6 rounded-2xl border border-gray-100 bg-white hover:border-pomegranate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
@@ -94,7 +94,7 @@ export const HowItWorks: React.FC = () => {
 
                 <div className="bg-slate-900 rounded-[2.5rem] p-12 text-white shadow-2xl relative overflow-hidden ring-1 ring-white/10">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-pomegranate-600/10 blur-[120px]"></div>
-                    <h4 className="text-sm font-bold text-pomegranate-400 uppercase tracking-widest mb-10">Live Connection Mesh</h4>
+                    <h4 className="text-sm font-bold text-pomegranate-400 uppercase tracking-widest mb-10">{t('howItWorks.architecture.liveMesh')}</h4>
 
                     <div className="relative h-[300px] flex items-center justify-center">
                         <div className="absolute w-24 h-24 rounded-full bg-pomegranate-600 shadow-[0_0_80px_rgba(225,29,72,0.4)] flex items-center justify-center animate-pulse z-20">
@@ -121,8 +121,8 @@ export const HowItWorks: React.FC = () => {
             {/* Part 2: Technical Architecture Section (The New "Schema" Section) */}
             <div className="space-y-12">
                 <div className="text-center max-w-2xl mx-auto">
-                    <h3 className="text-3xl font-black text-gray-900 mb-4">Technical Architecture</h3>
-                    <p className="text-gray-500 italic">"The Journey of a Data Packet"</p>
+                    <h3 className="text-3xl font-black text-gray-900 mb-4">{t('howItWorks.architecture.title')}</h3>
+                    <p className="text-gray-500 italic">{t('howItWorks.architecture.subtitle')}</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -155,12 +155,12 @@ export const HowItWorks: React.FC = () => {
                 <div className="bg-slate-50 rounded-3xl p-10 border border-gray-200 overflow-hidden shadow-inner">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                         <div className="space-y-6">
-                            <h4 className="text-xl font-bold text-gray-900">Integration Core</h4>
+                            <h4 className="text-xl font-bold text-gray-900">{t('howItWorks.architecture.integrationCore')}</h4>
                             <div className="space-y-4">
                                 {[
-                                    { label: "API Secret", val: "rh_live_7x9k..." },
-                                    { label: "Schema", val: "QuoteRequest v2.1" },
-                                    { label: "SLA", val: "99.9% Availability" }
+                                    { label: t('howItWorks.architecture.apiSecret'), val: "rh_live_7x9k..." },
+                                    { label: t('howItWorks.architecture.schema'), val: "QuoteRequest v2.1" },
+                                    { label: t('howItWorks.architecture.sla'), val: "99.9% Availability" }
                                 ].map((m, i) => (
                                     <div key={i} className="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm">
                                         <span className="text-xs font-bold text-gray-400 uppercase">{m.label}</span>
@@ -189,10 +189,10 @@ export const HowItWorks: React.FC = () => {
             <div className="bg-pomegranate-600 rounded-[2.5rem] p-12 text-white relative overflow-hidden text-center shadow-2xl shadow-pomegranate-900/30">
                 <div className="absolute -top-24 -left-24 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
                 <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-                    <p className="text-pomegranate-200 text-sm uppercase font-black tracking-[0.4em]">One Pulse. One Connection.</p>
-                    <h3 className="text-4xl font-black leading-tight">Bridging the Gap Between Risk and Digital.</h3>
+                    <p className="text-pomegranate-200 text-sm uppercase font-black tracking-[0.4em]">{t('howItWorks.quality.tagline')}</p>
+                    <h3 className="text-4xl font-black leading-tight">{t('howItWorks.quality.title')}</h3>
                     <p className="text-pomegranate-100/90 text-lg leading-relaxed font-medium">
-                        Our B2B connectivity layer is engineered for velocity. By bridging the gap between risk carriers and digital frontends, Rommaana empowers partners to deliver premium protection with a single integration.
+                        {t('howItWorks.quality.desc')}
                     </p>
                 </div>
             </div>

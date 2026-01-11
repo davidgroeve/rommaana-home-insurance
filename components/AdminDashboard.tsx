@@ -55,7 +55,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
       setEmailStatus({ id: req.id, success: result.success, message: result.message });
       setTimeout(() => setEmailStatus(null), 5000);
     } catch (err) {
-      setEmailStatus({ id: req.id, success: false, message: "Failed to send emails." });
+      setEmailStatus({ id: req.id, success: false, message: t('admin.failedSend') });
     } finally {
       setSendingEmail(null);
     }
@@ -66,7 +66,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3">
-          <span className="bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full border border-red-200">ADMIN ACCESS</span>
+          <span className="bg-red-100 text-red-800 text-xs font-bold px-3 py-1 rounded-full border border-red-200">{t('admin.access')}</span>
           <h1 className="text-3xl font-bold text-gray-900">{t('admin.title')}</h1>
         </div>
         <p className="text-gray-500 mt-2">{t('admin.subtitle')}</p>
