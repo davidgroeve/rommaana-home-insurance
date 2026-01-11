@@ -5,13 +5,14 @@ import { pdfService } from '../services/pdfService';
 import { emailService } from '../services/emailService';
 import { B2BManagement } from './B2BManagement';
 import { ApiDocumentation } from './ApiDocumentation';
+import { HowItWorks } from './HowItWorks';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface AdminDashboardProps {
   user: User;
 }
 
-type AdminTab = 'ISSUANCE' | 'PARTNERS' | 'DOCUMENTATION';
+type AdminTab = 'ISSUANCE' | 'PARTNERS' | 'DOCUMENTATION' | 'HOW_IT_WORKS';
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
   const { t } = useLanguage();
@@ -108,6 +109,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
           </svg>
           {t('admin.docs')}
+        </button>
+        <button
+          onClick={() => setActiveTab('HOW_IT_WORKS')}
+          className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'HOW_IT_WORKS'
+            ? 'bg-white text-pomegranate-600 shadow-md'
+            : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+            }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 22.25l-.394-1.683a2.25 2.25 0 0 0-1.637-1.637L12.78 18.5l1.683-.394a2.25 2.25 0 0 0 1.637-1.637l.394-1.683.394 1.683a2.25 2.25 0 0 0 1.637 1.637l1.683.394-1.683.394a2.25 2.25 0 0 0-1.637 1.637Z" />
+          </svg>
+          {t('admin.howItWorks')}
         </button>
       </div>
 
@@ -241,6 +254,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
         {activeTab === 'PARTNERS' && <B2BManagement />}
         {activeTab === 'DOCUMENTATION' && <ApiDocumentation />}
+        {activeTab === 'HOW_IT_WORKS' && <HowItWorks />}
       </div>
     </div>
   );
