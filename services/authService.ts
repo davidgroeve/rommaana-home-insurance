@@ -65,36 +65,47 @@ export const authService = {
     return newUser;
   },
 
-  autoRegister: async (name: string, email: string): Promise<{ userId: string, password: string }> => {
+  autoRegister: async (name: string, email: string): Promise<{ userId: string | null, password?: string }> => {
     // Generate a secure random password
     const password = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-10);
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: name,
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: name,
+          },
         },
-      },
-    });
+      });
 
-    if (error) {
-      // If user already exists, we might get an error. 
-      // In a real app we'd handle "user already exists" gracefully.
-      throw error;
+      if (error) {
+        if (error.message.toLowerCase().includes('already registered')) {
+          console.warn('[AuthService] User already exists. Proceeding with null ID to allow submission.');
+          return { userId: null };
+        }
+        throw error;
+      }
+
+      if (!data.user) throw new Error('Auto-registration failed');
+
+      // Create profile entry
+      try {
+        await supabase
+          .from('profiles')
+          .insert([
+            { id: data.user.id, full_name: name, role: 'CUSTOMER' }
+          ]);
+      } catch (profileErr) {
+        console.warn('[AuthService] Profile creation skipped or failed:', profileErr);
+      }
+
+      return { userId: data.user.id, password };
+    } catch (err) {
+      console.error('[AuthService] autoRegister crash:', err);
+      return { userId: null };
     }
-
-    if (!data.user) throw new Error('Auto-registration failed');
-
-    // Create profile entry
-    await supabase
-      .from('profiles')
-      .insert([
-        { id: data.user.id, full_name: name, role: 'CUSTOMER' }
-      ]);
-
-    return { userId: data.user.id, password };
   },
 
   logout: async () => {

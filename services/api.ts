@@ -83,34 +83,43 @@ export const rommaanaApi = {
      */
     submit: async (payload: SubmitQuotePayload): Promise<void> => {
       let { data: { user } } = await supabase.auth.getUser();
+      let finalUserId = user?.id;
 
       // If no user is logged in, auto-register
       if (!user) {
         console.log(`[API] No user session found. Auto-registering ${payload.customer.email}...`);
-        const { userId, password } = await authService.autoRegister(
-          `${payload.customer.firstName} ${payload.customer.lastName}`,
-          payload.customer.email
-        );
+        try {
+          const { userId, password } = await authService.autoRegister(
+            `${payload.customer.firstName} ${payload.customer.lastName}`,
+            payload.customer.email
+          );
 
-        // Mock send welcome email
-        await emailService.sendWelcomeEmail(payload.customer.email, password, payload.customer.firstName);
+          finalUserId = userId;
 
-        // Re-fetch user or just use the ID
-        const { data: newUser } = await supabase.auth.getUser();
-        user = newUser.user;
+          // Mock send welcome email ONLY if a new user was actually created
+          if (userId && password) {
+            await emailService.sendWelcomeEmail(payload.customer.email, password, payload.customer.firstName);
+          }
+        } catch (regError) {
+          console.error('[API] Auto-registration failed during submit:', regError);
+          // We proceed with finalUserId as null/undefined to allow anonymous-style submission
+        }
       }
 
       const { error } = await supabase
         .from('quotes')
         .insert([{
-          user_id: user?.id,
+          user_id: finalUserId || null,
           customer_details: payload.customer,
           quote_request: payload.quoteRequest,
           quote_result: payload.quoteResult,
           status: 'PENDING'
         }]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('[API] Quote submission failed:', error);
+        throw error;
+      }
     },
 
     /**

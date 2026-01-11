@@ -14,7 +14,7 @@ export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose })
     if (!isOpen) return null;
 
     // Group coverages by category
-    const categories = Array.from(new Set(DETAILED_COVERAGES.map(c => c.category)));
+    const categoryIds = Array.from(new Set(DETAILED_COVERAGES.map(c => c.categoryId)));
 
     return (
         <div className="fixed inset-0 z-[100] overflow-y-auto px-4 py-6 sm:px-0 flex items-center justify-center">
@@ -74,20 +74,20 @@ export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose })
                 <div className="flex-1 overflow-y-auto p-6">
                     {activeTab === 'COVERAGE' ? (
                         <div className="space-y-8 animate-fadeIn">
-                            {categories.map((category) => (
-                                <div key={category} className="space-y-4">
+                            {categoryIds.map((categoryId) => (
+                                <div key={categoryId} className="space-y-4">
                                     <h3 className="text-lg font-bold text-gray-900 border-b pb-2 flex items-center gap-2">
                                         <span className="w-2 h-6 bg-gold-500 rounded-full"></span>
-                                        {category}
+                                        {t(`coverage_data.categories.${categoryId}`)}
                                     </h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {DETAILED_COVERAGES.filter(c => c.category === category).map((item, idx) => (
+                                        {DETAILED_COVERAGES.filter(c => c.categoryId === categoryId).map((item, idx) => (
                                             <div key={idx} className="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-pomegranate-200 transition-colors group">
                                                 <h4 className="font-semibold text-pomegranate-800 mb-1 group-hover:text-pomegranate-600 transition-colors">
-                                                    {item.event}
+                                                    {t(`coverage_data.events.${item.id}`)}
                                                 </h4>
                                                 <p className="text-sm text-gray-600 leading-relaxed">
-                                                    {item.description}
+                                                    {t(`coverage_data.descriptions.${item.id}`)}
                                                 </p>
                                             </div>
                                         ))}
@@ -119,8 +119,8 @@ export const CoverageModal: React.FC<CoverageModalProps> = ({ isOpen, onClose })
                                             {idx + 1}
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-gray-900 mb-1">{item.item}</h4>
-                                            <p className="text-sm text-gray-500 leading-relaxed">{item.description}</p>
+                                            <h4 className="font-bold text-gray-900 mb-1">{t(`coverage_data.exclusions.items.${item.id}`)}</h4>
+                                            <p className="text-sm text-gray-500 leading-relaxed">{t(`coverage_data.exclusions.descriptions.${item.id}`)}</p>
                                         </div>
                                     </div>
                                 ))}
